@@ -15,15 +15,15 @@ using System.Data.OleDb;
 using System.Linq;
 using WebSpider;
 using WebSpider.Data;
-using WebSpider.Data.AdiGlobal;
+using WebSpider.AdiGlobal.Data.AdiGlobal;
 using WebSpider.Data.General;
 using WebSpider.Data.UpdateSpider1TableAdapters;
 using WebSpider.Data.DatabaseConnection;
-using WebSpider.Data.AdiExport;
+using WebSpider.AdiGlobal.Data.AdiExport;
 using WebSpider.Objects;
-using WebSpider.Objects.AdiGlobal;
+using WebSpider.AdiGlobal.Objects.AdiGlobal;
 using WebSpider.Objects.General;
-using WebSpider.Objects.AdiExport;
+using WebSpider.AdiGlobal.Objects.AdiExport;
 using System.Text.RegularExpressions;
 
 namespace WebSpider.Core
@@ -1717,7 +1717,7 @@ namespace WebSpider.Core
             ////finalTableTableAdapter.Connection = finalcon;
             //var oDataTable = finalTableTableAdapter.GetAllAdiProducts();
 
-            List<WebSpider.Objects.AdiExport.Final_Table> updateProducts = new List<WebSpider.Objects.AdiExport.Final_Table>();
+            List<WebSpider.AdiGlobal.Objects.AdiExport.Final_Table> updateProducts = new List<WebSpider.AdiGlobal.Objects.AdiExport.Final_Table>();
             String ConnStr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Persist Security Info=True", Settings.GetValue("FinalTable"));
             UpdateFinalTableManager ftManager = new UpdateFinalTableManager(ConnStr);
             updateProducts = ftManager.GetDataByAdiPart(AID_PART);
@@ -1744,7 +1744,7 @@ namespace WebSpider.Core
             ////finalTableTableAdapter.Connection = finalcon;
             //var oDataTable = finalTableTableAdapter.GetAllAdiProducts();
 
-            List<WebSpider.Objects.AdiExport.Final_Table> updateProducts = new List<WebSpider.Objects.AdiExport.Final_Table>();
+            List<WebSpider.AdiGlobal.Objects.AdiExport.Final_Table> updateProducts = new List<WebSpider.AdiGlobal.Objects.AdiExport.Final_Table>();
             String ConnStr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Persist Security Info=True", Settings.GetValue("FinalTable"));
             UpdateFinalTableManager ftManager = new UpdateFinalTableManager(ConnStr);
             updateProducts = ftManager.GetAllAdiProducts();
@@ -1764,9 +1764,9 @@ namespace WebSpider.Core
             return updateAdiProducts;
         }
 
-        public static List<WebSpider.Objects.AdiExport.Final_Table> GetUpdateProducts()
+        public static List<WebSpider.AdiGlobal.Objects.AdiExport.Final_Table> GetUpdateProducts()
         {
-            List<WebSpider.Objects.AdiExport.Final_Table> updateProducts = new List<WebSpider.Objects.AdiExport.Final_Table>();
+            List<WebSpider.AdiGlobal.Objects.AdiExport.Final_Table> updateProducts = new List<WebSpider.AdiGlobal.Objects.AdiExport.Final_Table>();
             String ConnStr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Persist Security Info=True", Settings.GetValue("FinalTable"));
             UpdateFinalTableManager ftManager = new UpdateFinalTableManager(ConnStr);
             updateProducts = ftManager.GetAllAdiProducts();
@@ -1779,7 +1779,7 @@ namespace WebSpider.Core
         #region [Login Check]
         private static void LoginCheck(TaskDetail taskDetail)
         {
-            if (!taskDetail.IgnitoMode && !AdiSpider.IsLoggedIn())
+            if (!taskDetail.IncognitoMode && !AdiSpider.IsLoggedIn())
             {
                 AdiSpider.Login();
             }
@@ -1865,7 +1865,7 @@ namespace WebSpider.Core
                             PingCheck();
                             AdiSpider.SaveProduct(p, mode);
                             AdiSpider.GetProductDetails(p, taskDetail.DownloadImages);
-                            if (taskDetail.IgnitoMode == false)
+                            if (taskDetail.IncognitoMode == false)
                             {
                                 AdiSpider.GetProductInventory(p, mode);
                             }
@@ -2053,7 +2053,7 @@ namespace WebSpider.Core
                             AdiSpider.SaveProduct(p, mode);
                             productManager.SetClearanceZone(p.AdiNumber);
                             AdiSpider.GetProductDetails(p, taskDetail.DownloadImages);
-                            if (taskDetail.IgnitoMode == false)
+                            if (taskDetail.IncognitoMode == false)
                             {
                                 AdiSpider.GetProductInventory(p, mode);
                             }
@@ -2117,7 +2117,7 @@ namespace WebSpider.Core
                     taskDetailManager.UpdateStatus(taskDetail.TaskID, taskDetail.TaskStatusText, taskDetail.TaskStatus);
 
                     LoginCheck(taskDetail);
-                    AdiSpider.LoggedIn = !taskDetail.IgnitoMode;
+                    AdiSpider.LoggedIn = !taskDetail.IncognitoMode;
                     List<AdiProduct> products = new List<AdiProduct>();
                     if (taskDetail.TaskType == Constants.ADICatagory)
                         products = AdiSpider.GetSaleCenterCategoryProducts(taskDetail.TaskNameValue);
@@ -2135,7 +2135,7 @@ namespace WebSpider.Core
                             AdiSpider.SaveProduct(p, mode);
                             productManager.SetSaleCenter(p.AdiNumber);
                             AdiSpider.GetProductDetails(p, taskDetail.DownloadImages);
-                            if (taskDetail.IgnitoMode == false)
+                            if (taskDetail.IncognitoMode == false)
                             {
                                 AdiSpider.GetProductInventory(p, mode);
                             }
@@ -2198,7 +2198,7 @@ namespace WebSpider.Core
                     taskDetailManager.UpdateStatus(taskDetail.TaskID, taskDetail.TaskStatusText, taskDetail.TaskStatus);
 
                     LoginCheck(taskDetail);
-                    AdiSpider.LoggedIn = !taskDetail.IgnitoMode;
+                    AdiSpider.LoggedIn = !taskDetail.IncognitoMode;
                     List<AdiProduct> products = new List<AdiProduct>();
                     if (taskDetail.TaskType == Constants.ADICatagory)
                         products = AdiSpider.GetOnlineSpecialCategoryProducts(taskDetail.TaskNameValue);
@@ -2217,7 +2217,7 @@ namespace WebSpider.Core
                             AdiSpider.SaveProduct(p, mode);
                             productManager.SetOnlineSpecials(p.AdiNumber);
                             AdiSpider.GetProductDetails(p, taskDetail.DownloadImages);
-                            if (taskDetail.IgnitoMode == false)
+                            if (taskDetail.IncognitoMode == false)
                             {
                                 AdiSpider.GetProductInventory(p, mode);
                             }
@@ -2281,7 +2281,7 @@ namespace WebSpider.Core
                     taskDetailManager.UpdateStatus(taskDetail.TaskID, taskDetail.TaskStatusText, taskDetail.TaskStatus);
 
                     LoginCheck(taskDetail);
-                    AdiSpider.LoggedIn = !taskDetail.IgnitoMode;
+                    AdiSpider.LoggedIn = !taskDetail.IncognitoMode;
                     List<AdiProduct> products = new List<AdiProduct>();
                     if (taskDetail.TaskType == Constants.ADICatagory)
                         products = AdiSpider.GetHotDealsCategoryProducts(taskDetail.TaskNameValue);
@@ -2299,7 +2299,7 @@ namespace WebSpider.Core
                             AdiSpider.SaveProduct(p, mode);
                             productManager.SetHotDeals(p.AdiNumber);
                             AdiSpider.GetProductDetails(p, taskDetail.DownloadImages);
-                            if (taskDetail.IgnitoMode == false)
+                            if (taskDetail.IncognitoMode == false)
                             {
                                 double inv = AdiSpider.GetProductInventory(p, mode);
                                 
@@ -2361,7 +2361,7 @@ namespace WebSpider.Core
                     taskDetailManager.UpdateStatus(taskDetail.TaskID, taskDetail.TaskStatusText, taskDetail.TaskStatus);
 
                     LoginCheck(taskDetail);
-                    AdiSpider.LoggedIn = !taskDetail.IgnitoMode;
+                    AdiSpider.LoggedIn = !taskDetail.IncognitoMode;
                     List<AdiProduct> products = new List<AdiProduct>();
                     if (taskDetail.TaskType == Constants.ADICatagory)
                         products = AdiSpider.GetInStockCategoryProducts(taskDetail.TaskNameValue);
@@ -2380,7 +2380,7 @@ namespace WebSpider.Core
                             AdiSpider.SaveProduct(p, mode);
                             productManager.SetStockAvailability(p.AdiNumber);
                             AdiSpider.GetProductDetails(p, taskDetail.DownloadImages);
-                            if (taskDetail.IgnitoMode == false)
+                            if (taskDetail.IncognitoMode == false)
                             {
                                 AdiSpider.GetProductInventory(p, mode);
                             }
@@ -2434,7 +2434,7 @@ namespace WebSpider.Core
             //Utility.ApplicationLog(String.Format("AdiGlobal product Crawling started for {0}, Ignito Mode - {1}, Download Images - {2}", taskDetail.TaskNameText, taskDetail.IgnitoMode, taskDetail.DownloadImages));
             try
             {
-                LoginCheck(new TaskDetail() { IgnitoMode = false });
+                LoginCheck(new TaskDetail() { IncognitoMode = false });
 
                 List<AdiProduct> products = new List<AdiProduct>();
                 products = adiProductManager.GetAllPriorityProducts();
@@ -2483,50 +2483,6 @@ namespace WebSpider.Core
             }
         }
         #endregion
-        #endregion
-
-        #region [ Generate Tables ]
-        public static String GenerateCrawlTables()
-        {
-            List<String> Messages = new List<String>();
-            try
-            {
-                String FileName = Settings.GetValue("WebSpiderDB");
-                String ConnStr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Persist Security Info=True", FileName);
-                WebSpider.Data.AdiExport.AdiTableGenerator gen = new WebSpider.Data.AdiExport.AdiTableGenerator(ConnStr);
-                Messages.Add(String.Format("Using File \'{0}\'", FileName));
-                Messages.Add(gen.GenerateAdiBrand());
-                Messages.Add(gen.GenerateAdiCategory());
-                Messages.Add(gen.GenerateFinalTable());
-                Messages.Add(gen.GenerateAdiChild());
-                Messages.Add(gen.GenerateAdiInventoryDetails());
-                Messages.Add(gen.GenerateAdiInventory());
-            }
-            catch (Exception ex)
-            {
-                Messages.Add(ex.ToString());
-            }
-            return String.Join("\n", Messages);
-        }
-
-        public static String GenerateUpdateTables()
-        {
-            List<String> Messages = new List<String>();
-            try
-            {
-                String FileName = Settings.GetValue("FinalTable");
-                String ConnStr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Persist Security Info=True", FileName);
-                WebSpider.Data.AdiExport.AdiTableGenerator gen = new WebSpider.Data.AdiExport.AdiTableGenerator(ConnStr);
-                Messages.Add(String.Format("Using File \'{0}\'", FileName));
-                Messages.Add(gen.GenerateFinalTableUpdate());
-                Messages.Add(gen.GenerateAdiChild());
-            }
-            catch (Exception ex)
-            {
-                Messages.Add(ex.ToString());
-            }
-            return String.Join("\n", Messages);
-        }
         #endregion
 
         #region [ Export ]

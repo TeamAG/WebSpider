@@ -10,9 +10,9 @@ using System.Windows.Forms;
 using WebSpider.Data.UpdateSpider1TableAdapters;
 using System.Data.OleDb;
 using WebSpider.Core;
-using WebSpider.Data.AdiGlobal;
+using WebSpider.AdiGlobal.Data.AdiGlobal;
 using WebSpider.Objects;
-using WebSpider.Objects.AdiGlobal;
+using WebSpider.AdiGlobal.Objects.AdiGlobal;
 
 namespace WebSpider
 {

@@ -72,10 +72,6 @@
       <Project>{5a61fa7e-8aad-4bb0-b0cf-b28bbdbde757}</Project>
       <Name>WebSpider.Objects</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebSpiderLibrary\WebSpiderLibrary.csproj">
-      <Project>{08b26ec4-76ac-46a0-8556-8821dfef1430}</Project>
-      <Name>WebSpiderLibrary</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Service1.resx">

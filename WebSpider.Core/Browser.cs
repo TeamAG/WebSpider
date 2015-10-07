@@ -42,6 +42,10 @@ namespace WebSpider.Core
                     HttpClient httpClient = new HttpClient();
 
                     HtmlDocument document = new HtmlDocument();
+                    document.OptionAutoCloseOnEnd = true;
+                    document.OptionCheckSyntax = true;
+                    document.OptionFixNestedTags = true;
+                    //document.OptionWriteEmptyNodes = true;
                     byte[] responseBytes;
                     if (EnableCaching && !cache.IsCachedUrl(Url))
                     {
@@ -197,7 +201,8 @@ namespace WebSpider.Core
 
             foreach (var items in inputItems)
             {
-                formData.Add(items.Attributes["name"].Value, items.Attributes["value"] == null ? String.Empty : items.Attributes["value"].Value);
+                if (!ReferenceEquals(items.Attributes["name"], null))
+                    formData.Add(items.Attributes["name"].Value, items.Attributes["value"] == null ? String.Empty : items.Attributes["value"].Value);
             }
             //foreach (var items in inputItems)
             //{

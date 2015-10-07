@@ -52,6 +52,11 @@ namespace WebSpider.Data.General
         #endregion
 
         #region [Insert]
+        public void Insert(FinalExport fe)
+        {
+            Insert(fe.ExportSite, fe.ExportType, fe.ExportValue);
+        }
+
         public int Insert(String ExportSite, String ExportType, String ExportValue)
         {
             String Query = "INSERT INTO FinalExport (ExportSite, ExportType, ExportValue, CreatedDate) "
@@ -78,6 +83,8 @@ namespace WebSpider.Data.General
             return oDm.RunActionQuery();
         }
         #endregion
+
+
 
         
     }

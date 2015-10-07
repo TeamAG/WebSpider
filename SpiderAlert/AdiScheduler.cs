@@ -10,7 +10,7 @@ using System.Configuration;
 using WebSpider.Objects;
 using WebSpider.Core;
 using WebSpider;
-using WebSpider.Objects.AdiGlobal;
+//using WebSpider.Objects.AdiGlobal;
 using WebSpider.Objects.General;
 using System.Threading;
 using WebSpider.Data.General;
@@ -94,19 +94,19 @@ namespace SpiderAlert
             List<TaskDetail> tasksList = new TasksScheduler().GetPendingSchedules(Constants.SiteName.ADIGLOBAL);
             for (int index = 0; index < tasksList.Count; index++)
             {
-                if (tasksList[index].TaskMode == TaskMode.ADI_CRAWL)
+                if (tasksList[index].TaskMode == Constants.TaskMode.ADI_CRAWL)
                     AdiSpider.CrawlProduct(tasksList[index]);
-                else if (tasksList[index].TaskMode == TaskMode.ADI_UPDATE)
+                else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_UPDATE)
                     AdiSpider.UpdateProduct(tasksList[index]);
-                else if (tasksList[index].TaskMode == TaskMode.ADI_CLEARANCE_ZONE)
+                else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_CLEARANCE_ZONE)
                     AdiSpider.GetClearanzeZone(tasksList[index]);
-                else if (tasksList[index].TaskMode == TaskMode.ADI_HOT_DEALS)
+                else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_HOT_DEALS)
                     AdiSpider.GetHotDeals(tasksList[index]);
-                else if (tasksList[index].TaskMode == TaskMode.ADI_ONLINE_SPECIALS)
+                else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_ONLINE_SPECIALS)
                     AdiSpider.GetOnlineSpecials(tasksList[index]);
-                else if (tasksList[index].TaskMode == TaskMode.ADI_SALE_CENTER)
+                else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_SALE_CENTER)
                     AdiSpider.GetSaleCenter(tasksList[index]);
-                else if (tasksList[index].TaskMode == TaskMode.ADI_IN_STOCK)
+                else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_IN_STOCK)
                     AdiSpider.GetInStockItems(tasksList[index]);
                 else
                     AdiSpider.ProcessProductLeastCount();

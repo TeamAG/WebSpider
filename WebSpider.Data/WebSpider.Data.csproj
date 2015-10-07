@@ -119,18 +119,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdiExport\AdiTableGenerator.cs" />
-    <Compile Include="AdiExport\CategoryExportManager.cs" />
-    <Compile Include="AdiExport\BrandExportManager.cs" />
-    <Compile Include="AdiExport\AdiInventoryDetailsManager.cs" />
-    <Compile Include="AdiExport\AdiInventoryManager.cs" />
-    <Compile Include="AdiExport\UpdateFinalTableManager.cs" />
-    <Compile Include="AdiGlobal\ADIBrandManager.cs" />
-    <Compile Include="AdiGlobal\ADIInventoryDetailsManager.cs" />
-    <Compile Include="AdiGlobal\ADIInventoryExportManager.cs" />
-    <Compile Include="AdiGlobal\ADIProductManager.cs" />
-    <Compile Include="AdiGlobal\ADICategoryManager.cs" />
-    <Compile Include="AdiGlobal\ADICategoryExportManager.cs" />
     <Compile Include="DatabaseConnection\OleDbDataConnection.cs" />
     <Compile Include="DatabaseConnection\SqlDataConnection.cs" />
     <Compile Include="DatabaseManager\OleDbDataManager.cs" />
@@ -140,7 +128,8 @@
     <Compile Include="DatabaseManager\SqlDataManager.cs" />
     <Compile Include="DatabaseConnection\DataAccessBase.cs" />
     <Compile Include="DatabaseManager\DataManager.cs" />
-    <Compile Include="AdiGlobal\ProductSpecificationManager.cs" />
+    <Compile Include="General\UpdateTableGenerator.cs" />
+    <Compile Include="General\WebSpiderTableGenerator.cs" />
     <Compile Include="General\FinalExportManager.cs" />
     <Compile Include="General\GenerateDatabase.cs" />
     <Compile Include="General\TaskDetailManager.cs" />
@@ -162,8 +151,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UpdateSpider.xsd</DependentUpon>
     </Compile>
-    <Compile Include="AdiExport\AdiChildManager.cs" />
-    <Compile Include="AdiExport\FinalTableManager.cs" />
     <Compile Include="WebSpiderDb1.cs">
       <DependentUpon>WebSpiderDb1.xsd</DependentUpon>
       <SubType>Component</SubType>

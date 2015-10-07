@@ -185,4 +185,24 @@
     <Type>System.String</Type>
     <Value>D:\Users\Anirban\Desktop\CrawlImage\UpdateImage</Value>
   </ConfigurationSetting>
+  <ConfigurationSetting>
+    <Name>SecLockLoginPage</Name>
+    <Type>System.String</Type>
+    <Value>https://adiglobal.us/Pages/WebRegistration.aspx</Value>
+  </ConfigurationSetting>
+  <ConfigurationSetting>
+    <Name>SecLockUsername</Name>
+    <Type>System.String</Type>
+    <Value>AJDavis@esysconet.com</Value>
+  </ConfigurationSetting>
+  <ConfigurationSetting>
+    <Name>SecLockPassword</Name>
+    <Type>System.String</Type>
+    <Value>45Kd#rT89</Value>
+  </ConfigurationSetting>
+  <ConfigurationSetting>
+    <Name>SecLockImagePrefix</Name>
+    <Type>System.String</Type>
+    <Value>S</Value>
+  </ConfigurationSetting>
 </WebSpiderSettings>

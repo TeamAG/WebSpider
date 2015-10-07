@@ -36,9 +36,9 @@ namespace WebSpider.Objects.General
 		public Boolean DownloadImages { get; set; }
 
 		/// <summary>
-		/// Ignito Mode - yes/no
+		/// Incognito Mode - yes/no
 		/// </summary>
-		public Boolean IgnitoMode { get; set; }
+		public Boolean IncognitoMode { get; set; }
 
 		/// <summary>
 		/// Task Type -- Category/brads/sale

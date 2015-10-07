@@ -19,10 +19,10 @@ using System.Web;
 using WebSpider.Data.WebSpiderDb1TableAdapters;
 using Newtonsoft.Json;
 using WebSpider.Objects;
-using WebSpider.Objects.AdiGlobal;
+using WebSpider.AdiGlobal.Objects.AdiGlobal;
 using WebSpider.Data.General;
 using WebSpider.Objects.General;
-using WebSpider.Objects.AdiExport;
+using WebSpider.AdiGlobal.Objects.AdiExport;
 
 namespace WebSpider
 {
@@ -56,7 +56,22 @@ namespace WebSpider
             LoadSettings();
             //Utility.ApplicationLog("Loading Tasks");
             ReloadTaskDetails();
-            cmbAdiMode.SelectedIndex = 0;
+            //
+            //SecLockSpider.Login();
+            //if (SecLockSpider.LoggedIn)
+            //{
+            //    try
+            //    {
+            //        SecLockSpider.GetManufacturersFromSite();
+            //    }
+            //    catch
+            //    {
+            //    }
+            //    finally
+            //    {
+            //        SecLockSpider.Logout();
+            //    }
+            //}
         }
 
 
@@ -105,12 +120,12 @@ namespace WebSpider
                 btnStart.Text = "Start";
                 btnStart.Enabled = true;
                 cmbAdiMode.Enabled = true;
-                chkDownloadImage.Enabled = true;
+                chkAdiDownloadImage.Enabled = true;
                 btnTimer.Enabled = true;
                 if (cmbAdiMode.Text != "Update")
                 {
                     treeCatagory.Enabled = true;
-                    chkIncognito.Enabled = true;
+                    chkAdiIncognito.Enabled = true;
                 }
                 //ChangeButtonText(btnStart, "Start");
                 //ChangeControlState(btnStart, true);
@@ -195,6 +210,20 @@ namespace WebSpider
             }
         }
 
+        public delegate void ClearTreeNodesDelegate(TreeView treeView);
+        private void ClearTreeNodes(TreeView treeView)
+        {
+            if (this.InvokeRequired)
+            {
+                ClearTreeNodesDelegate d = new ClearTreeNodesDelegate(ClearTreeNodes);
+                treeView.Invoke(d, treeView);
+            }
+            else
+            {
+                treeView.Nodes.Clear();
+            }
+        }
+
         public delegate void AddTreeRootNodeDelegate(TreeView treeView, TreeNode tNode);
         private void AddTreeRootNode(TreeView treeView, TreeNode tNode)
         {
@@ -209,12 +238,26 @@ namespace WebSpider
             }
         }
 
-        public delegate void AddCategoryTreeSubNodeDelegate(TreeNode tNode, TreeNode newNode);
-        private void AddCategoryTreeSubNode(TreeNode tNode, TreeNode newNode)
+        public delegate void DeleteTreeRootNodeDelegate(TreeView treeView, TreeNode tNode);
+        private void DeleteTreeRootNode(TreeView treeView, TreeNode tNode)
         {
             if (this.InvokeRequired)
             {
-                AddCategoryTreeSubNodeDelegate d = new AddCategoryTreeSubNodeDelegate(AddCategoryTreeSubNode);
+                DeleteTreeRootNodeDelegate d = new DeleteTreeRootNodeDelegate(DeleteTreeRootNode);
+                treeView.Invoke(d, treeView, tNode);
+            }
+            else
+            {
+                treeView.Nodes.Remove(tNode);
+            }
+        }
+
+        public delegate void AddTreeSubNodeDelegate(TreeNode tNode, TreeNode newNode);
+        private void AddTreeSubNode(TreeNode tNode, TreeNode newNode)
+        {
+            if (this.InvokeRequired)
+            {
+                AddTreeSubNodeDelegate d = new AddTreeSubNodeDelegate(AddTreeSubNode);
                 treeCatagory.Invoke(d, tNode, newNode);
             }
             else
@@ -269,6 +312,26 @@ namespace WebSpider
             }
             else
                 lvItem.SubItems[2].Text = Text;
+        }
+        #endregion
+
+        #region [ Tab Selection ]
+        private void tabControlMain_Selected(object sender, TabControlEventArgs e)
+        {
+            switch(e.TabPage.Name){
+                case "tabPageAdiGlobal":
+                    if (String.IsNullOrEmpty(cmbAdiMode.Text))
+                        cmbAdiMode.SelectedIndex = 0;
+                    break;
+                case "tabPageSecLock":
+                    if (tvSecLockManufacturers.Nodes.Count == 0)
+                        LoadSecLockManufactueres();
+                    if (tvSecLockCategories.Nodes.Count == 0)
+                        LoadSecLockCategories();
+                    if (tvsecLockProducts.Nodes.Count == 0)
+                        LoadSecLockUpdateProducts();
+                    break;
+            }
         }
         #endregion
 
@@ -352,7 +415,7 @@ namespace WebSpider
                             // Single Selected Item
                             //item.Selected = true;
                             TaskDetail taskDetail = GetTaskFromListViewItem(selectedItems[0]);
-                            toolStripMenuItemIgnitoMode.Text = String.Format("Ignito Mode {0}", taskDetail.IgnitoMode ? "OFF" : "ON");
+                            toolStripMenuItemIgnitoMode.Text = String.Format("Ignito Mode {0}", taskDetail.IncognitoMode ? "OFF" : "ON");
                             toolStripMenuItemDownloadImages.Text = String.Format("DownloadImages {0}", taskDetail.DownloadImages ? "OFF" : "ON");
                             
                         }
@@ -362,7 +425,7 @@ namespace WebSpider
                             List<TaskDetail> taskDetails = new List<TaskDetail>();
                             foreach (ListViewItem lvItem in selectedItems)
                                 taskDetails.Add(GetTaskFromListViewItem(lvItem));
-                            Boolean IgnitoMode = (taskDetails.Where(x => x.IgnitoMode).Count() == taskDetails.Count);
+                            Boolean IgnitoMode = (taskDetails.Where(x => x.IncognitoMode).Count() == taskDetails.Count);
                             Boolean DownloadImages = (taskDetails.Where(x => x.DownloadImages).Count() == taskDetails.Count);
 
                             toolStripMenuItemIgnitoMode.Text = String.Format("Ignito Mode {0}", IgnitoMode ? "OFF" : "ON");
@@ -421,7 +484,7 @@ namespace WebSpider
                     if (!ReferenceEquals(taskDetail, null))
                     {
                         // Ignito Mode Toggle
-                        taskDetail.IgnitoMode = IgnitoMode; // !taskDetail.IgnitoMode;
+                        taskDetail.IncognitoMode = IgnitoMode; // !taskDetail.IgnitoMode;
                         new TasksScheduler().SaveTaskDetail(taskDetail);
                         SetTaskDetailInListViewItem(taskDetail);
                     }
@@ -541,7 +604,7 @@ namespace WebSpider
                 TaskStatusText = lvItem.SubItems[3].Text,
                 TaskType = lvItem.SubItems[4].Text,
                 TaskMode = lvItem.SubItems[5].Text,
-                IgnitoMode = lvItem.SubItems[6].Text == "YES" ? true : false,
+                IncognitoMode = lvItem.SubItems[6].Text == "YES" ? true : false,
                 DownloadImages = lvItem.SubItems[7].Text == "YES" ? true : false,
                 TaskSite = lvItem.SubItems[8].Text
             };
@@ -557,7 +620,7 @@ namespace WebSpider
                                 taskDetail.TaskStatusText, 
                                 taskDetail.TaskType, 
                                 taskDetail.TaskMode,
-                                taskDetail.IgnitoMode ? "YES" : "NO", 
+                                taskDetail.IncognitoMode ? "YES" : "NO", 
                                 taskDetail.DownloadImages ? "YES" : "NO", 
                                 taskDetail.TaskSite 
                             };
@@ -633,31 +696,37 @@ namespace WebSpider
                 ChangeControlState(btnStart, false);
                 ChangeControlState(cmbAdiMode, false);
                 ChangeControlState(treeCatagory, false);
-                ChangeControlState(chkDownloadImage, false);
+                ChangeControlState(chkAdiDownloadImage, false);
                 ChangeControlState(btnTimer, false);
-                ChangeControlState(chkIncognito, false);
+                ChangeControlState(chkAdiIncognito, false);
 
                 if (btnStart.Enabled)
                     return;
 
-                List<TaskDetail> tasksList = new TasksScheduler().GetAdiPendingTasks();
+                List<TaskDetail> tasksList = new TasksScheduler().GetPendingTasks();
 
                 for (int index = 0; index < tasksList.Count; index++)
                 {
-                    if (tasksList[index].TaskMode == TaskMode.ADI_CRAWL)
+                    if (tasksList[index].TaskMode == Constants.TaskMode.ADI_CRAWL)
                         SpiderThread.Add(new ParameterizedThreadStart(AdiSpider.CrawlProduct), tasksList[index]);
-                    else if (tasksList[index].TaskMode == TaskMode.ADI_UPDATE)
+                    else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_UPDATE)
                         SpiderThread.Add(new ParameterizedThreadStart(AdiSpider.UpdateProduct), tasksList[index]);
-                    else if (tasksList[index].TaskMode == TaskMode.ADI_CLEARANCE_ZONE)
+                    else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_CLEARANCE_ZONE)
                         SpiderThread.Add(new ParameterizedThreadStart(AdiSpider.GetClearanzeZone), tasksList[index]);
-                    else if (tasksList[index].TaskMode == TaskMode.ADI_HOT_DEALS)
+                    else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_HOT_DEALS)
                         SpiderThread.Add(new ParameterizedThreadStart(AdiSpider.GetHotDeals), tasksList[index]);
-                    else if (tasksList[index].TaskMode == TaskMode.ADI_ONLINE_SPECIALS)
+                    else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_ONLINE_SPECIALS)
                         SpiderThread.Add(new ParameterizedThreadStart(AdiSpider.GetOnlineSpecials), tasksList[index]);
-                    else if (tasksList[index].TaskMode == TaskMode.ADI_SALE_CENTER)
+                    else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_SALE_CENTER)
                         SpiderThread.Add(new ParameterizedThreadStart(AdiSpider.GetSaleCenter), tasksList[index]);
-                    else if (tasksList[index].TaskMode == TaskMode.ADI_IN_STOCK)
+                    else if (tasksList[index].TaskMode == Constants.TaskMode.ADI_IN_STOCK)
                         SpiderThread.Add(new ParameterizedThreadStart(AdiSpider.GetInStockItems), tasksList[index]);
+                    else if (tasksList[index].TaskMode == Constants.TaskMode.SECLOCK_MANUFACTURER_CRAWL)
+                        SpiderThread.Add(new ParameterizedThreadStart(SecLockSpider.Crawl), tasksList[index]);
+                    else if (tasksList[index].TaskMode == Constants.TaskMode.SECLOCK_CATEGORY_CRAWL)
+                        SpiderThread.Add(new ParameterizedThreadStart(SecLockSpider.Crawl), tasksList[index]);
+                    else if (tasksList[index].TaskMode == Constants.TaskMode.SECLOCK_PRODUCT_UPDATE)
+                        SpiderThread.Add(new ParameterizedThreadStart(SecLockSpider.Update), tasksList[index]);
                 }
                 //Utility.ApplicationLog("Tasks Processed");
             }
@@ -676,9 +745,9 @@ namespace WebSpider
                 ChangeControlState(btnStart, true);
                 ChangeControlState(cmbAdiMode, true);
                 ChangeControlState(treeCatagory, true);
-                ChangeControlState(chkDownloadImage, true);
+                ChangeControlState(chkAdiDownloadImage, true);
                 ChangeControlState(btnTimer, true);
-                ChangeControlState(chkIncognito, true);
+                ChangeControlState(chkAdiIncognito, true);
             }
         }
 
@@ -769,8 +838,8 @@ namespace WebSpider
                     treeViewAdiProducts.Enabled = false;
                     LoadAllCategoryBrands();
                     tabAdiGlobal.SelectedTab = tabPageAdiCategory;
-                    chkIncognito.Checked = true;
-                    chkIncognito.Enabled = true;
+                    chkAdiIncognito.Checked = true;
+                    chkAdiIncognito.Enabled = true;
                     break;
                 case "In Stock":
                     treeCatagory.Enabled = true;
@@ -778,8 +847,8 @@ namespace WebSpider
                     treeViewAdiProducts.Enabled = false;
                     LoadAllCategoryBrands();
                     tabAdiGlobal.SelectedTab = tabPageAdiCategory;
-                    chkIncognito.Checked = false;
-                    chkIncognito.Enabled = false;
+                    chkAdiIncognito.Checked = false;
+                    chkAdiIncognito.Enabled = false;
                     break;
                 case "Update":
                     treeCatagory.Enabled = false;
@@ -787,8 +856,8 @@ namespace WebSpider
                     treeViewAdiProducts.Enabled = true;
                     LoadUpdateProducts();
                     tabAdiGlobal.SelectedTab = tabPageAdiProducts;
-                    chkIncognito.Checked = false;
-                    chkIncognito.Enabled = false;
+                    chkAdiIncognito.Checked = false;
+                    chkAdiIncognito.Enabled = false;
                     break;
             }
         }
@@ -798,36 +867,36 @@ namespace WebSpider
         private void LoadCategory()
         {
             List<AdiCategory> oCategories = AdiSpider.LoadCatagory(true);
-            AddToCategory(null, oCategories, TaskMode.ADI_CRAWL);
+            AddToCategory(null, oCategories, Constants.TaskMode.ADI_CRAWL);
         }
 
         private void LoadClearanceZoneCategory()
         {
             List<AdiCategory> oCategories = AdiSpider.LoadClearanceZoneCategories(true);
-            AddToCategory(null, oCategories, TaskMode.ADI_CLEARANCE_ZONE);
+            AddToCategory(null, oCategories, Constants.TaskMode.ADI_CLEARANCE_ZONE);
         }
 
         private void LoadHotDealsCategory()
         {
             List<AdiCategory> oCategories = AdiSpider.LoadHotDealsCategories(true);
-            AddToCategory(null, oCategories, TaskMode.ADI_HOT_DEALS);
+            AddToCategory(null, oCategories, Constants.TaskMode.ADI_HOT_DEALS);
         }
 
         private void LoadOnlineSpecialsCategory()
         {
             List<AdiCategory> oCategories = AdiSpider.LoadOnlineSpecialsCategories(true);
-            AddToCategory(null, oCategories, TaskMode.ADI_ONLINE_SPECIALS);
+            AddToCategory(null, oCategories, Constants.TaskMode.ADI_ONLINE_SPECIALS);
         }
 
         private void LoadSaleCenterCategory()
         {
             List<AdiCategory> oCategories = AdiSpider.LoadSaleCenterCategories(true);
-            AddToCategory(null, oCategories, TaskMode.ADI_SALE_CENTER);
+            AddToCategory(null, oCategories, Constants.TaskMode.ADI_SALE_CENTER);
         }
         private void LoadInStockCategory()
         {
             List<AdiCategory> oCategories = AdiSpider.LoadInStockCategories(true);
-            AddToCategory(null, oCategories, TaskMode.ADI_IN_STOCK);
+            AddToCategory(null, oCategories, Constants.TaskMode.ADI_IN_STOCK);
         }
         #endregion
 
@@ -842,13 +911,13 @@ namespace WebSpider
                 TreeNode tn = new TreeNode();
                 tn.Text = c.DisplayName;
                 tn.Tag = c.Value;
-                tn.Checked = (mgr.GetDataByTaskDetail(-1, Constants.SiteName.ADIGLOBAL, taskMode, TaskType.ADI_CATEGORY, c.Value).Count() == 1);
+                tn.Checked = (mgr.GetDataByTaskDetail(-1, Constants.SiteName.ADIGLOBAL, taskMode, Constants.TaskType.ADI_CATEGORY, c.Value).Count() == 1);
                 if (ReferenceEquals(tNode, null))
                     //treeCatagory.Nodes.Add(tn);
                     AddTreeRootNode(treeCatagory, tn);
                 else
                     //tNode.Nodes.Add(tn);
-                    AddCategoryTreeSubNode(tNode, tn);
+                    AddTreeSubNode(tNode, tn);
                 if (c.SubCategory.Count > 0)
                     AddToCategory(tn, c.SubCategory, taskMode);
             }
@@ -857,7 +926,7 @@ namespace WebSpider
         private void treeCatagory_AfterCheck(object sender, TreeViewEventArgs e)
         {
             CheckTreeViewNode(e.Node, e.Node.Checked);
-            TaskFromTreeViewNode(e.Node, e.Node.Checked, cmbAdiMode.Text, TaskType.ADI_CATEGORY, Constants.SiteName.ADIGLOBAL);
+            TaskFromTreeViewNode(e.Node, e.Node.Checked, cmbAdiMode.Text, Constants.TaskType.ADI_CATEGORY, Constants.SiteName.ADIGLOBAL, chkAdiIncognito.Checked, chkAdiDownloadImage.Checked );
             ReloadTaskDetails();
         }
         #endregion
@@ -871,28 +940,28 @@ namespace WebSpider
                 TreeNode tn = new TreeNode();
                 tn.Text = b.DisplayName;
                 tn.Tag = b.Value;
-                tn.Checked = (mgr.GetDataByTaskDetail(-1, Constants.SiteName.ADIGLOBAL, taskMode, TaskType.ADI_BRAND, b.Value).Count() == 1);
+                tn.Checked = (mgr.GetDataByTaskDetail(-1, Constants.SiteName.ADIGLOBAL, taskMode, Constants.TaskType.ADI_BRAND, b.Value).Count() == 1);
                 if (ReferenceEquals(tNode, null))
                     //treeCatagory.Nodes.Add(tn);
                     AddTreeRootNode(treeViewBrands, tn);
                 else
                     //tNode.Nodes.Add(tn);
-                    AddCategoryTreeSubNode(tNode, tn);
+                    AddTreeSubNode(tNode, tn);
             }
         }
 
         private void treeViewBrands_AfterCheck(object sender, TreeViewEventArgs e)
         {
             CheckTreeViewNode(e.Node, e.Node.Checked);
-            TaskFromTreeViewNode(e.Node, e.Node.Checked, cmbAdiMode.Text, TaskType.ADI_BRAND, Constants.SiteName.ADIGLOBAL);
+            TaskFromTreeViewNode(e.Node, e.Node.Checked, cmbAdiMode.Text, Constants.TaskType.ADI_BRAND, Constants.SiteName.ADIGLOBAL, chkAdiIncognito.Checked, chkAdiDownloadImage.Checked);
             ReloadTaskDetails();
         }
         #endregion
 
         #region [ Products ]
-        private void LoadUpdateProductsFromDb()
+        private void LoadAdiUpdateProductsFromDb()
         {
-            List<WebSpider.Objects.AdiExport.Final_Table> updateProducts = AdiSpider.GetUpdateProducts();
+            List<WebSpider.AdiGlobal.Objects.AdiExport.Final_Table> updateProducts = AdiSpider.GetUpdateProducts();
             foreach (var item in updateProducts)
             {
                 TreeNode tn = new TreeNode();
@@ -905,7 +974,7 @@ namespace WebSpider
 
         private void treeViewAdiProducts_AfterCheck(object sender, TreeViewEventArgs e)
         {
-            TaskFromTreeViewNode(e.Node, e.Node.Checked, cmbAdiMode.Text, TaskType.ADI_UPDATE, Constants.SiteName.ADIGLOBAL);
+            TaskFromTreeViewNode(e.Node, e.Node.Checked, cmbAdiMode.Text, Constants.TaskType.ADI_UPDATE, Constants.SiteName.ADIGLOBAL, chkAdiIncognito.Checked, chkAdiDownloadImage.Checked);
             ReloadTaskDetails();
         }
 
@@ -943,37 +1012,48 @@ namespace WebSpider
             }
         }
 
-        private void TaskFromTreeViewNode(TreeNode node, Boolean isChecked, string taskMode, string taskType, string site)
+        private void TaskFromTreeViewNode(TreeNode node, Boolean isChecked, string taskMode, string taskType, string site, bool incognito, bool downloadImages)
         {
             if (node.Nodes.Count > 0)
                 return;
 
             TaskDetail task;
-
-            switch (taskMode)
+            switch (site)
             {
-                case "Crawl":
-                    taskMode = TaskMode.ADI_CRAWL;
+                case Constants.SiteName.ADIGLOBAL:
+                    #region [ADIGLOBAL]
+                    switch (taskMode)
+                    {
+                        case "Crawl":
+                            taskMode = Constants.TaskMode.ADI_CRAWL;
+                            break;
+                        case "Update":
+                            taskMode = Constants.TaskMode.ADI_UPDATE;
+                            break;
+                        case "Clearance Zone":
+                            taskMode = Constants.TaskMode.ADI_CLEARANCE_ZONE;
+                            break;
+                        case "Hot Deals":
+                            taskMode = Constants.TaskMode.ADI_HOT_DEALS;
+                            break;
+                        case "Online Specials":
+                            taskMode = Constants.TaskMode.ADI_ONLINE_SPECIALS;
+                            break;
+                        case "Sale Center":
+                            taskMode = Constants.TaskMode.ADI_SALE_CENTER;
+                            break;
+                        case "In Stock":
+                            taskMode = Constants.TaskMode.ADI_IN_STOCK;
+                            break;
+                    }
+                    #endregion
                     break;
-                case "Update":
-                    taskMode = TaskMode.ADI_UPDATE;
-                    break;
-                case "Clearance Zone":
-                    taskMode = TaskMode.ADI_CLEARANCE_ZONE;
-                    break;
-                case "Hot Deals":
-                    taskMode = TaskMode.ADI_HOT_DEALS;
-                    break;
-                case "Online Specials":
-                    taskMode = TaskMode.ADI_ONLINE_SPECIALS;
-                    break;
-                case "Sale Center":
-                    taskMode = TaskMode.ADI_SALE_CENTER;
-                    break;
-                case "In Stock":
-                    taskMode = TaskMode.ADI_IN_STOCK;
+                case Constants.SiteName.SECLOCK:
+                    #region [ SECLOCK ]
+                    #endregion
                     break;
             }
+            
 
             var items = listViewScheduleTasks.SelectedItems;
             Int64 TaskHeaderID = Convert.ToInt64((items.Count == 1) ? items[0].Text : "-1");
@@ -988,8 +1068,10 @@ namespace WebSpider
                 task.TaskNameValue = node.Tag.ToString();
                 task.TaskStatusText = Constants.OPEN_TEXT;
                 task.TaskStatus = TaskDetailStatus.Open;
-                task.DownloadImages = chkDownloadImage.Checked;
-                task.IgnitoMode = chkIncognito.Checked;
+                task.DownloadImages = downloadImages;
+                task.IncognitoMode = incognito;
+                //task.DownloadImages = chkDownloadImage.Checked;
+                //task.IncognitoMode = chkIncognito.Checked;
                 task.TaskType = taskType;
                 task.TaskMode = taskMode;
                 task.TaskSite = site;
@@ -1028,37 +1110,37 @@ namespace WebSpider
         {
             List<AdiBrand> oBrands = AdiSpider.GetAllBrands();
             treeViewBrands.Nodes.Clear();
-            AddToBrand(null, oBrands, TaskMode.ADI_CRAWL);
+            AddToBrand(null, oBrands, Constants.TaskMode.ADI_CRAWL);
         }
 
         private void LoadClearanceZoneBrands()
         {
             List<AdiBrand> oBrands = AdiSpider.GetClearanceZoneBrands(true);
-            AddToBrand(null, oBrands, TaskMode.ADI_CLEARANCE_ZONE);
+            AddToBrand(null, oBrands, Constants.TaskMode.ADI_CLEARANCE_ZONE);
         }
 
         private void LoadHotDealsBrands()
         {
             List<AdiBrand> oBrands = AdiSpider.GetHotDealsBrands(true);
-            AddToBrand(null, oBrands, TaskMode.ADI_HOT_DEALS);
+            AddToBrand(null, oBrands, Constants.TaskMode.ADI_HOT_DEALS);
         }
 
         private void LoadOnlineSpecialsBrands()
         {
             List<AdiBrand> oBrands = AdiSpider.GetOnlineSpecialsBrands(true);
-            AddToBrand(null, oBrands, TaskMode.ADI_ONLINE_SPECIALS);
+            AddToBrand(null, oBrands, Constants.TaskMode.ADI_ONLINE_SPECIALS);
         }
 
         private void LoadSaleCenterBrands()
         {
             List<AdiBrand> oBrands = AdiSpider.GetSaleCenterBrands(true);
-            AddToBrand(null, oBrands, TaskMode.ADI_SALE_CENTER);
+            AddToBrand(null, oBrands, Constants.TaskMode.ADI_SALE_CENTER);
         }
 
         private void LoadInStockBrands()
         {
             List<AdiBrand> oBrands = AdiSpider.GetInStockBrands(true);
-            AddToBrand(null, oBrands, TaskMode.ADI_IN_STOCK);
+            AddToBrand(null, oBrands, Constants.TaskMode.ADI_IN_STOCK);
         }
         #endregion
 
@@ -1296,7 +1378,7 @@ namespace WebSpider
 
         private void updateProductLoaderWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            LoadUpdateProductsFromDb();
+            LoadAdiUpdateProductsFromDb();
         }
         #endregion
 
@@ -1323,6 +1405,219 @@ namespace WebSpider
             }
         }
         
+        #endregion
+
+        #region [ SecLock ]
+
+        #region [ Manufacturer / Category / Products Tree ]
+
+        #region [ Manufacturer ]
+        #region  [ Load Manufactuerer ]
+        public void LoadSecLockManufactueres()
+        {
+            BackgroundWorker seclockManufacturerWorker = new BackgroundWorker();
+            seclockManufacturerWorker.DoWork += seclockManufacturerWorker_DoWork;
+            seclockManufacturerWorker.RunWorkerAsync();
+        }
+
+        private void seclockManufacturerWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var manufacturers = new SecLockSpider().GetManufacturers();
+            for (int i = 0; i < manufacturers.Count(); i++)
+            {
+                var manufacturer = manufacturers[i];
+                TreeNode node = new TreeNode();
+                node.Tag = manufacturer.Code;
+                node.Text = manufacturer.Name;
+                //node.Nodes.Add("Loading");
+
+                AddTreeRootNode(tvSecLockManufacturers, node);
+            }
+        }
+        #endregion
+        
+
+        #region [ Manufacturer Check ]
+        private void tvSecLockManufacturers_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            CheckTreeViewNode(e.Node, e.Node.Checked);
+            TaskFromTreeViewNode(e.Node, e.Node.Checked, Constants.TaskMode.SECLOCK_MANUFACTURER_CRAWL, Constants.TaskType.SECLOCK_CRAWL, Constants.SiteName.SECLOCK, chkSeclockIncognito.Checked, chkSeclockDownloadImages.Checked);
+            ReloadTaskDetails();
+        }
+        #endregion
+
+        #region [ Before Expand ]
+        private void tvSecLockManufacturers_BeforeExpand(object sender, TreeViewCancelEventArgs e)
+        {
+
+        }
+        #endregion
+        #endregion
+
+        #region [ Categories ]
+
+        #region [ Load categories ]
+        public void LoadSecLockCategories()
+        {
+            BackgroundWorker SecLockCategoryWorker = new BackgroundWorker();
+            SecLockCategoryWorker.DoWork += SecLockCategoryWorker_DoWork;
+            SecLockCategoryWorker.RunWorkerAsync();
+        }
+
+        private void SecLockCategoryWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var categories = new SecLockSpider().GetCategories();
+            for (int i = 0; i < categories.Count(); i++)
+            {
+                var category = categories[i];
+                TreeNode tn = new TreeNode();
+                tn.Tag = category.Code ;
+                tn.Text = category.Name;
+                //tvSecLockCategories.Nodes.Add(category.Code, category.Name);
+                AddTreeRootNode(tvSecLockCategories, tn);
+                //SecLockSpider.GetCategoryProducts(category);
+            }
+        }
+        #endregion
+
+        #region [ Category Click ]
+        private void tvSecLockCategories_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            CheckTreeViewNode(e.Node, e.Node.Checked);
+            TaskFromTreeViewNode(e.Node, e.Node.Checked, Constants.TaskMode.SECLOCK_CATEGORY_CRAWL, Constants.TaskType.SECLOCK_CRAWL, Constants.SiteName.SECLOCK, chkSeclockIncognito.Checked, chkSeclockDownloadImages.Checked);
+            ReloadTaskDetails();
+        }
+        #endregion
+
+        #endregion
+
+        #region [ Update Product ]
+        public void LoadSecLockUpdateProducts()
+        {
+            var products = new SecLockSpider().GetUpdateProducts();
+            foreach (var p in products)
+            {
+                TreeNode tn = new TreeNode();
+                tn.Text = p.Name;
+                tn.Tag = p.Code;
+                AddTreeRootNode(tvsecLockProducts, tn);
+            }
+        }
+
+        private void tvsecLockProducts_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            CheckTreeViewNode(e.Node, e.Node.Checked);
+            TaskFromTreeViewNode(e.Node, e.Node.Checked, Constants.TaskMode.SECLOCK_PRODUCT_UPDATE, Constants.TaskType.SECLOCK_UPDATE, Constants.SiteName.SECLOCK, chkSeclockIncognito.Checked, chkSeclockDownloadImages.Checked);
+            ReloadTaskDetails();
+        }
+        #endregion
+
+        #region [SecLock Manufanufacturers SelectAll ]
+        private void chkSecLockManufanufacturersSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            BackgroundWorker bwSecLockManufanufacturersSelectAll = new BackgroundWorker();
+            bwSecLockManufanufacturersSelectAll.DoWork += bwSecLockManufanufacturersSelectAll_DoWork;
+            bwSecLockManufanufacturersSelectAll.RunWorkerAsync();
+        }
+
+        private void bwSecLockManufanufacturersSelectAll_DoWork(object sender, DoWorkEventArgs e)
+        {
+            foreach (TreeNode tn in tvSecLockManufacturers.Nodes)
+            {
+                CheckNode(tn, chkSecLockManufanufacturersSelectAll.Checked);
+            }
+        }
+        #endregion
+
+        #region [ SecLock Categories SelectAll ]
+        private void chkSecLockCategoriessSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            BackgroundWorker bwSecLockCategoriessSelectAll = new BackgroundWorker();
+            bwSecLockCategoriessSelectAll.DoWork += chkSecLockCategoriessSelectAll_DoWork;
+            bwSecLockCategoriessSelectAll.RunWorkerAsync();
+        }
+        private void chkSecLockCategoriessSelectAll_DoWork(object sender, DoWorkEventArgs e)
+        {
+            foreach (TreeNode tn in tvSecLockCategories.Nodes)
+            {
+                CheckNode(tn, chkSecLockCategoriessSelectAll.Checked);
+            }
+        }
+        #endregion
+
+        #region [ SecLock Products SelectAll ]
+        private void chkSecLockProductsSelectAll_CheckedChanged(object sender, EventArgs e)
+        {
+            BackgroundWorker bwSecLockProductsSelectAll = new BackgroundWorker();
+            bwSecLockProductsSelectAll.DoWork += chkSecLockProductsSelectAll_DoWork;
+            bwSecLockProductsSelectAll.RunWorkerAsync();
+
+        }
+
+        private void chkSecLockProductsSelectAll_DoWork(object sender, DoWorkEventArgs e)
+        {
+            foreach (TreeNode tn in tvsecLockProducts.Nodes)
+            {
+                CheckNode(tn, chkSecLockProductsSelectAll.Checked);
+            }
+        }
+        #endregion
+
+        #endregion
+
+        #region [ SecLock Toolbar ]
+        private void toolBarSecLock_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            switch (e.Button.Name)
+            {
+                case "toolBarButtonSecLockRefresh":
+                    BackgroundWorker bwReloadSecLockmanufacturers = new BackgroundWorker();
+                    bwReloadSecLockmanufacturers.DoWork += bwReloadSecLockManufacturers_DoWork;
+
+                    BackgroundWorker bwReloadSecLockCategories = new BackgroundWorker();
+                    bwReloadSecLockCategories.DoWork += bwReloadSecLockCategories_DoWork;
+
+                    bwReloadSecLockmanufacturers.RunWorkerAsync();
+                    bwReloadSecLockCategories.RunWorkerAsync();
+
+                    new SecLockSpider().ReloadAllManufacturers();
+                    new SecLockSpider().ReloadallCategories();
+                    break;
+            }
+        }
+
+        private void bwReloadSecLockManufacturers_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ClearTreeNodes(tvSecLockManufacturers);
+            var manufacturers = new SecLockSpider().ReloadAllManufacturers();
+            for (int i = 0; i < manufacturers.Count(); i++)
+            {
+                var manufacturer = manufacturers[i];
+                TreeNode node = new TreeNode();
+                node.Tag = manufacturer.Code;
+                node.Text = manufacturer.Name;
+
+                AddTreeRootNode(tvSecLockManufacturers, node);
+            }
+        }
+
+        private void bwReloadSecLockCategories_DoWork(object sender, DoWorkEventArgs e)
+        {
+            ClearTreeNodes(tvSecLockCategories);
+            var categories = new SecLockSpider().GetCategories();
+            for (int i = 0; i < categories.Count(); i++)
+            {
+                var category = categories[i];
+                if (category.Name.Trim().ToUpper() == "ALL CATEGORIES")
+                    continue;
+                TreeNode tn = new TreeNode();
+                tn.Tag = category.Code;
+                tn.Text = category.Name;
+                AddTreeRootNode(tvSecLockCategories, tn);
+            }
+        }
+        #endregion
+
         #endregion
 
         #region [ Settings Tab ]
@@ -1372,12 +1667,23 @@ namespace WebSpider
                 #endregion
 
                 #region [ADIGLOBAL]
-                Settings.SetValue("ADILoginPage", typeof(String), txtLoginPage.Text);
-                Settings.SetValue("ADIUsername", typeof(String), txtADIUsername.Text);
-                Settings.SetValue("ADIPassword", typeof(String), txtADIPassword.Text);
-                Settings.SetValue("ADIProductDefaultUpdateInterval", typeof(Int32), Convert.ToInt32(txtAdiProductUpdateInterval.Text));
-                Settings.SetValue("AdiCategoryUpdateInterval", typeof(Int32), Convert.ToInt32(txtAdiCatagoryUpdateInterval.Text));
-                Settings.SetValue("AdiImagePrefix", typeof(String), txtImagePrefix.Text);
+                Settings.SetValue("ADILoginPage", typeof(String), txtAdiGlobalLoginPage.Text);
+                Settings.SetValue("ADIUsername", typeof(String), txtAdiGlobalUsername.Text);
+                Settings.SetValue("ADIPassword", typeof(String), txtAdiGlobalPassword.Text);
+                Settings.SetValue("ADIProductDefaultUpdateInterval", typeof(Int32), Convert.ToInt32(txtAdiGlobalProductUpdateInterval.Text));
+                Settings.SetValue("AdiCategoryUpdateInterval", typeof(Int32), Convert.ToInt32(txtAdiGlobalCatagoryUpdateInterval.Text));
+                Settings.SetValue("AdiImagePrefix", typeof(String), txtAdiGlobalImagePrefix.Text);
+                #endregion
+
+                #region [ Sec Lock ]
+                Settings.SetValue("SecLockLoginPage", typeof(String), txtSecLockLoginPage.Text);
+
+
+                Settings.SetValue("SecLockUsername", typeof(String), txtSecLockUserName.Text);
+                Settings.SetValue("SecLockPassword", typeof(String), txtSecLockPassword.Text);
+                //Settings.SetValue("SecLockProductDefaultUpdateInterval", typeof(Int32), Convert.ToInt32(txtSecLockProductUpdateInterval.Text));
+                //Settings.SetValue("SecLockCategoryUpdateInterval", typeof(Int32), Convert.ToInt32(txtSecLockCatagoryUpdateInterval.Text));
+                Settings.SetValue("SecLockImagePrefix", typeof(String), txtSecLockImagePrefix.Text);
                 #endregion
 
                 //Utility.ApplicationLog("Saving application settings");
@@ -1450,12 +1756,21 @@ namespace WebSpider
                 #endregion
 
                 #region [ADIGLOBAL]
-                txtLoginPage.Text = Settings.GetValue("ADILoginPage");
-                txtADIUsername.Text = Settings.GetValue("ADIUsername");
-                txtADIPassword.Text = Settings.GetValue("ADIPassword");
-                txtAdiProductUpdateInterval.Text = Settings.GetValue("ADIProductDefaultUpdateInterval").ToString();
-                txtAdiCatagoryUpdateInterval.Text = Settings.GetValue("AdiCategoryUpdateInterval").ToString();
-                txtImagePrefix.Text = Settings.GetValue("AdiImagePrefix");
+                txtAdiGlobalLoginPage.Text = Settings.GetValue("ADILoginPage");
+                txtAdiGlobalUsername.Text = Settings.GetValue("ADIUsername");
+                txtAdiGlobalPassword.Text = Settings.GetValue("ADIPassword");
+                txtAdiGlobalProductUpdateInterval.Text = Settings.GetValue("ADIProductDefaultUpdateInterval").ToString();
+                txtAdiGlobalCatagoryUpdateInterval.Text = Settings.GetValue("AdiCategoryUpdateInterval").ToString();
+                txtAdiGlobalImagePrefix.Text = Settings.GetValue("AdiImagePrefix");
+                #endregion
+
+                #region [ Sec Lock ]
+                txtSecLockLoginPage.Text = Settings.GetValue("SecLockLoginPage");
+                txtSecLockUserName.Text = Settings.GetValue("SecLockUsername");
+                txtSecLockPassword.Text = Settings.GetValue("SecLockPassword");
+                //txtSecLockProductUpdateInterval.Text = Settings.GetValue("SecLockProductDefaultUpdateInterval").ToString();
+                //txtSecLockCatagoryUpdateInterval.Text = Settings.GetValue("SecLockCategoryUpdateInterval").ToString();
+                txtSecLockImagePrefix.Text = Settings.GetValue("SecLockImagePrefix");
                 #endregion
                 //Utility.ApplicationLog("Application settings loaded sucessfully");
             }
@@ -1639,24 +1954,24 @@ namespace WebSpider
             #endregion
 
             #region [ADI Global]
-            if (txtLoginPage.Text.Length == 0)
+            if (txtAdiGlobalLoginPage.Text.Length == 0)
             {
                 ShowValidationMessage("ADIGlobal Login Page is required");
                 return;
             }
-            if (txtADIUsername.Text.Length == 0)
+            if (txtAdiGlobalUsername.Text.Length == 0)
             {
                 ShowValidationMessage("ADIGlobal username is required");
                 return;
             }
-            if (txtADIPassword.Text.Length == 0)
+            if (txtAdiGlobalPassword.Text.Length == 0)
             {
                 ShowValidationMessage("ADIGlobal password is required");
                 return;
             }
             try
             {
-                Convert.ToInt32(txtAdiProductUpdateInterval.Text);
+                Convert.ToInt32(txtAdiGlobalProductUpdateInterval.Text);
             }
             catch
             {
@@ -1665,7 +1980,7 @@ namespace WebSpider
             }
             try
             {
-                Convert.ToInt32(txtAdiCatagoryUpdateInterval.Text);
+                Convert.ToInt32(txtAdiGlobalCatagoryUpdateInterval.Text);
             }
             catch
             {
@@ -1675,6 +1990,15 @@ namespace WebSpider
 
             #endregion
 
+            #region [ Sec Lock ]
+            Settings.SetValue("SecLockLoginPage", typeof(String), txtSecLockLoginPage.Text);
+            Settings.SetValue("SecLockUsername", typeof(String), txtSecLockUserName.Text);
+            Settings.SetValue("SecLockPassword", typeof(String), txtSecLockPassword.Text);
+            //txtSecLockProductUpdateInterval.Text = Settings.GetValue("SecLockProductDefaultUpdateInterval").ToString();
+            //txtSecLockCatagoryUpdateInterval.Text = Settings.GetValue("SecLockCategoryUpdateInterval").ToString();
+            Settings.SetValue("SecLockImagePrefix", typeof(String), txtSecLockImagePrefix.Text);
+            #endregion
+
             SaveSettings();
             MessageBox.Show("Settings saved!", "WebSpider", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -1682,14 +2006,16 @@ namespace WebSpider
         #region [ Table Generation ]
         private void btnGenerateAdiCrawlSchema_Click(object sender, EventArgs e)
         {
-            String MessageText = AdiSpider.GenerateCrawlTables();
+            String FileName = Settings.GetValue("WebSpiderDB");
+            String MessageText = WebSpiderTableGenerator.Generate(FileName);
             MessageBox.Show(this, MessageText, "Table Generated", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btnGenerateAdiUpdateSchema_Click(object sender, EventArgs e)
         {
-            String ConnStr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Persist Security Info=True", Settings.GetValue("FinalTable"));
-            String MessageText = AdiSpider.GenerateUpdateTables();
+            String FileName = Settings.GetValue("FinalTable");
+            //String ConnStr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Persist Security Info=True", Settings.GetValue("FinalTable"));
+            String MessageText = UpdateSpiderTableGenerator.Generate(FileName);
             MessageBox.Show(this, MessageText, "Table Generated", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
@@ -1712,7 +2038,9 @@ namespace WebSpider
             try
             {
                 AdiSpider.Export(ref toolStripStatusExport);
+                SecLockSpider.Export(ref toolStripStatusExport);
             }
+            catch { }
             finally
             {
                 exportTimer.Start();
@@ -1859,11 +2187,19 @@ namespace WebSpider
             var result = MessageBox.Show("Are you sure to clean all internal data? This will remove all scrapped data stored inside the application. Make sure all tasks are stopped before you continue. Application will be restarted once data is cleaned.", "WebSpider", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == System.Windows.Forms.DialogResult.Yes)
             {
-                GenerateDatabase.Generate();
-                Application.Restart();
+                exportTimer.Stop();
+                try
+                {
+                    GenerateDatabase.Generate();
+                    Application.Restart();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show(this, ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    exportTimer.Start();
+                }
             }
         }
-
     }
     
 

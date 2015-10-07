@@ -25,6 +25,10 @@ namespace WebSpider.Core
             }
         }
 
+        public static String GetValidFileName(String FileName)
+        {
+            return GetValidDirName(FileName);
+        }
         public static String GetValidDirName(String DirName)
         {
             try

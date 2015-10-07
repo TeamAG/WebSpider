@@ -20,35 +20,103 @@ namespace WebSpider.Data.General
             var directoryName = System.IO.Path.GetDirectoryName(dirPath);
             var fileName = System.IO.Path.Combine(directoryName, DbFile);
 
-            string connStr = @"Data Source = " + fileName;
+            string connStr = @"Data Source = " + fileName;// +";Mode = Exclusive";
 
             using (SqlCeConnection conn = new SqlCeConnection(connStr))
             {
                 String Query = String.Empty;
-                Query = "DELETE FROM [TaskHeader]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [TaskDetail]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [FinalExport]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [Final_Table]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [ADIProduct1]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [ADIProduct]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [ADIInventoryExport]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [ADIInventory]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [ADIChild]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [ADICategoryExport]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [ADICategory]";
-                RunDDL(conn, Query);
-                Query = "DELETE FROM [ADIBrands]";
-                RunDDL(conn, Query);
+                try
+                {
+                    Query = "DELETE FROM [TaskHeader]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [TaskDetail]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [FinalExport]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [Final_Table]";
+                    RunDDL(conn, Query);
+                } catch {}
+
+                #region [ AdiGlobal ]
+                try {
+                    Query = "DELETE FROM [ADIProduct1]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADIProduct]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADIInventoryExport]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADIInventory]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADIChild]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADICategoryExport]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADICategory]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADIBrands]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADIBrands]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADIBrands]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADIBrands]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [ADIBrands]";
+                    RunDDL(conn, Query);
+                } catch {}
+                #endregion
+
+                #region [ SecLock ]
+                try {
+                    Query = "DELETE FROM [SecLockCategory]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try {
+                    Query = "DELETE FROM [SecLockManufacturer]";
+                    RunDDL(conn, Query);
+                } catch {}
+                try
+                {
+                    Query = "DELETE FROM [SecLockManufacturerSeries]";
+                    RunDDL(conn, Query);
+                }
+                catch { }
+                try {
+                    Query = "DELETE FROM [SecLockProduct]";
+                    RunDDL(conn, Query);
+                } catch {}
+                #endregion
+
+                conn.Close();
+                conn.Dispose();
             }
 
 
@@ -66,6 +134,7 @@ namespace WebSpider.Data.General
             using (SqlCeConnection conn = new SqlCeConnection(connStr))
             {
                 String Query = String.Empty;
+                #region [ Temp Tables ]
                 Query = "CREATE TABLE [TaskHeader] ([ScheduleID] bigint IDENTITY (1,1) NOT NULL, [TaskName] nvarchar(255) NOT NULL, [TaskDescription] nvarchar(4000) NOT NULL, [Site] nvarchar(255) NOT NULL, [ScheduleFrom] datetime NOT NULL, [TaskRepeat] bit NULL, [TaskRepeatInterval] int NOT NULL, [TaskRepeatUnit] nvarchar(20) NOT NULL, [Enabled] bit NULL, [LastRun] datetime NULL, [NextRun] datetime NULL, [CreatedDate] datetime NOT NULL)";
                 RunDDL(conn, Query);
                 Query = "CREATE TABLE [TaskDetail] ([TaskID] bigint IDENTITY (1,1) NOT NULL, [TaskHeaderID] bigint NOT NULL, [TaskNameText] nvarchar(255) NOT NULL, [TaskNameValue] nvarchar(255) NOT NULL, [TaskStatusText] nvarchar(255) NOT NULL, [TaskStatus] int NULL, [DownloadImages] bit DEFAULT (0) NOT NULL, [IgnitoMode] bit DEFAULT (0) NOT NULL, [TaskType] nvarchar(255) NOT NULL, [TaskMode] nvarchar(255) NOT NULL, [TaskSite] nvarchar(255) NOT NULL, [CreatedOn] datetime NOT NULL, [UpdatedOn] datetime NULL)";
@@ -74,6 +143,9 @@ namespace WebSpider.Data.General
                 RunDDL(conn, Query);
                 Query = "CREATE TABLE [Final_Table] ([ID] bigint NULL, [UPC] nvarchar(255) NULL, [VDR_PART] nvarchar(255) NULL, [VDR_IT_DSC] nvarchar(255) NULL, [Image_Folder] nvarchar(255) NULL, [AID_SOURCE_ID] nvarchar(225) NULL, [AID_PART] nvarchar(255) NULL, [AID_COST] numeric(10,2) NULL, [AID_IMG1] nvarchar(255) NULL, [AID_IMG2] nvarchar(255) NULL, [AID_VENDOR] nvarchar(255) NULL, [AID_INV] nvarchar(255) NULL, [AID_LastUpdate] nvarchar(255) NULL)";
                 RunDDL(conn, Query);
+                #endregion
+                
+                #region [ AdiGlobal ]
                 Query = "CREATE TABLE [ADIProduct1] ([ID] bigint IDENTITY (27468,1) NOT NULL, [AdiNumber] nvarchar(255) NULL, [VendorName] nvarchar(255) NULL, [VendorNumber] nvarchar(255) NULL, [VendorModel] nvarchar(255) NULL, [PartNumber] nvarchar(255) NULL, [Name] nvarchar(255) NULL, [Url] nvarchar(255) NULL, [AllowedToBuy] nvarchar(255) NULL, [DangerousGoodsMessage] nvarchar(255) NULL, [InventoryMessage] nvarchar(255) NULL, [MarketingMessage] nvarchar(255) NULL, [MinQty] numeric(10,2) NULL, [ModelNumber] nvarchar(255) NULL, [Price] numeric(10,2) NULL, [ProductDescription] nvarchar(255) NULL, [ProductImagePath] nvarchar(255) NULL, [RecycleFee] nvarchar(255) NULL, [SaleMessageIndicator] nvarchar(255) NULL, [SaleType] nvarchar(255) NULL, [ST] nvarchar(255) NULL, [SMI] nvarchar(255) NULL, [InventoryMessageCode] nvarchar(255) NULL, [CatagoryID] nvarchar(255) NULL, [SmallImage] nvarchar(255) NULL, [BigImage] nvarchar(255) NULL, [ClearanceZone] bit DEFAULT (0) NOT NULL, [SaleCenter] bit DEFAULT (0) NOT NULL, [OnlineSpecials] bit DEFAULT (0) NOT NULL, [HotDeals] bit DEFAULT (0) NOT NULL, [InStock] bit DEFAULT (0) NOT NULL, [IsUpdating] bit NULL, [UpdateInterval] int NULL, [PriorityProduct] BIT, [LeastCount] int DEFAULT 0, [LastUpdateDatetime] datetime NULL)";
                 RunDDL(conn, Query);
                 Query = "CREATE TABLE [ADIProduct] ([ID] bigint NOT NULL, [VENDOR_TITLE_NAME] nvarchar(255) NULL, [PART_NUM] nvarchar(255) NULL, [Cost] float NULL, [CAT_CODE] nvarchar(255) NULL, [BRAND_VALUE] nvarchar(255) NULL, [VDR_PART] nvarchar(255) NULL, [VDR_IT_DSC] nvarchar(4000) NULL, [Image_Folder] nvarchar(255) NULL, [AID_IMG1] nvarchar(255) NULL, [AID_IMG2] nvarchar(255) NULL, [CR Cost] float NULL, [MKT_MSG] nvarchar(4000) NULL, [LastUpdate] datetime NULL, [IsUpdating] bit NULL, [UpdateInterval] int NULL)";
@@ -102,6 +174,29 @@ namespace WebSpider.Data.General
                 RunDDL(conn, Query);
                 Query = "ALTER TABLE [ADIBrands] ADD CONSTRAINT [PK__ADIBrands__00000000000003B8] PRIMARY KEY ([Value])";
                 RunDDL(conn, Query);
+                #endregion
+                
+                #region [ SecLock ]
+                Query = "CREATE TABLE [SecLockManufacturer] ([Code] nvarchar(100) NOT NULL, [Name] nvarchar(100) NOT NULL, [ImagePath] nvarchar(100) NOT NULL, [Url] nvarchar(100) NOT NULL)";
+                RunDDL(conn, Query);
+                Query = "CREATE TABLE [SecLockManufacturerSeries] ([ID] bigint IDENTITY (1,1) NOT NULL, [ManufacturerCode] nvarchar(100) NOT NULL, [Name] nvarchar(100) NOT NULL)";
+                RunDDL(conn, Query);
+                Query = "CREATE TABLE [SecLockCategory] ([Code] nvarchar(100) NOT NULL, [Name] nvarchar(100) NOT NULL)";
+                RunDDL(conn, Query);
+                Query = "CREATE TABLE [SecLockProduct] ([Code] nvarchar(100) NOT NULL, [Name] nvarchar(100) NOT NULL, [Url] nvarchar(100) NOT NULL, [ManufacturerCode] nvarchar(100) NULL, [ManufacturerName] nvarchar(100) NULL, [ManufacturerSeries] nvarchar(100) NULL, [CategoyCode] nvarchar(100) NULL, [CategoryName] nvarchar(100) NULL, [YourPrice] numeric(10,2) NULL, [ListPrice] numeric(10,2) NULL, [ImageUrl1] nvarchar(100) NULL, [ImageUrl2] nvarchar(100) NULL, [Stock] int NULL, [Description] nvarchar(4000) NULL, [TechDoc] nvarchar(4000) NULL)";
+                RunDDL(conn, Query);
+                Query = "ALTER TABLE [SecLockManufacturer] ADD CONSTRAINT [PK_SecLockManufacturer] PRIMARY KEY ([Code])";
+                RunDDL(conn, Query);
+                Query = "ALTER TABLE [SecLockManufacturerSeries] ADD CONSTRAINT [PK_SecLockManufacturerSeries] PRIMARY KEY ([ID])";
+                RunDDL(conn, Query);
+                Query = "ALTER TABLE [SecLockCategory] ADD CONSTRAINT [PK_SecLockCategory] PRIMARY KEY ([Code])";
+                RunDDL(conn, Query);
+                Query = "ALTER TABLE [SecLockProduct] ADD CONSTRAINT [PK_SecLockProduct] PRIMARY KEY ([Code])";
+                RunDDL(conn, Query);
+                #endregion
+
+                conn.Close();
+                conn.Dispose();
             }
 
         }
@@ -122,5 +217,6 @@ namespace WebSpider.Data.General
                 }
             }
         }
+
     }
 }

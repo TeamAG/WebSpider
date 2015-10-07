@@ -51,10 +51,18 @@ namespace WebSpider.Data.General
 
         public List<TaskDetail> GetDataByStatus(Int64 TaskHeaderID, Int32 TaskStatus)
         {
-            String Query = "SELECT * FROM TaskDetail WHERE TaskHeaderID = @TaskHeaderID, TaskStatus = @TaskStatus";
+            String Query = "SELECT * FROM TaskDetail WHERE TaskHeaderID = @TaskHeaderID AND TaskStatus = @TaskStatus";
             SqlCeDataManager oDm = new SqlCeDataManager(ConnectionString, Query, true);
             oDm.AddIntegerBigPara("TaskHeaderID", TaskHeaderID);
             oDm.AddIntegerPara("TaskStatus", TaskStatus);
+            return DataParser.ToList<TaskDetail>(oDm.GetTable());
+        }
+
+        public List<TaskDetail> GetDataByStatus(Int64 TaskHeaderID, Int32[] TaskStatus)
+        {
+            String Query = "SELECT * FROM TaskDetail WHERE TaskHeaderID = " + TaskHeaderID.ToString() 
+                + " AND TaskStatus IN (" + string.Join(",", TaskStatus.Select(x => x.ToString())) + ")";
+            SqlCeDataManager oDm = new SqlCeDataManager(ConnectionString, Query, true);
             return DataParser.ToList<TaskDetail>(oDm.GetTable());
         }
 
@@ -232,6 +240,8 @@ namespace WebSpider.Data.General
             return oDm.RunActionQuery();
         }
         #endregion
+
+
 
         
     }

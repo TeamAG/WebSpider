@@ -31,6 +31,13 @@ namespace WebSpider.Core
             return detailManager.GetDataByHeader(ScheduleID);
         }
 
+        public List<TaskDetail> GetPendingTasks()
+        {
+            int[] taskStatus = { TaskDetailStatus.Pending, TaskDetailStatus.Open };
+            return detailManager.GetDataByStatus(-1, taskStatus);
+        }
+
+
         public List<TaskDetail> GetAdiPendingTasks()
         {
             int []taskStatus = {TaskDetailStatus.Pending, TaskDetailStatus.Open};
@@ -49,7 +56,7 @@ namespace WebSpider.Core
         #region [Save Task Detail]
         public int SaveTaskDetail(TaskDetail taskDetail)
         {
-            return SaveTaskDetail(taskDetail.TaskID, taskDetail.TaskHeaderID, taskDetail.TaskNameText, taskDetail.TaskNameValue, taskDetail.TaskStatusText, taskDetail.TaskStatus, taskDetail.DownloadImages, taskDetail.IgnitoMode, taskDetail.TaskType, taskDetail.TaskMode, taskDetail.TaskSite);
+            return SaveTaskDetail(taskDetail.TaskID, taskDetail.TaskHeaderID, taskDetail.TaskNameText, taskDetail.TaskNameValue, taskDetail.TaskStatusText, taskDetail.TaskStatus, taskDetail.DownloadImages, taskDetail.IncognitoMode, taskDetail.TaskType, taskDetail.TaskMode, taskDetail.TaskSite);
         }
 
         public int SaveTaskDetail(Int64 TaskID, Int64 TaskHeaderID, String TaskNameText, String TaskNameValue, String TaskStatusText, int TaskStatus, Boolean DownloadImages, Boolean IgnitoMode, String TaskType, String TextMode, String TaskSite)

@@ -132,9 +132,14 @@
     </Content>
     <Content Include="Settings.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WebSpider.AdiGlobal\WebSpider.AdiGlobal.csproj">
+      <Project>{807fc3ce-73f3-4adf-829b-0f46df1111fb}</Project>
+      <Name>WebSpider.AdiGlobal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WebSpider.Core\WebSpider.Core.csproj">
       <Project>{ac72d984-f3e4-421b-b49f-0823bc14a1d0}</Project>
       <Name>WebSpider.Core</Name>
@@ -151,9 +156,9 @@
       <Project>{e0bc4f25-88d5-4d64-978a-e8a35bcabfe2}</Project>
       <Name>WebSpider.Resources</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebSpiderLibrary\WebSpiderLibrary.csproj">
-      <Project>{08b26ec4-76ac-46a0-8556-8821dfef1430}</Project>
-      <Name>WebSpiderLibrary</Name>
+    <ProjectReference Include="..\WebSpider.SecLock\WebSpider.SecLock.csproj">
+      <Project>{b0701e92-ce32-4387-a0be-01aa5ab14ef2}</Project>
+      <Name>WebSpider.SecLock</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

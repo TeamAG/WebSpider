@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "-1",
             "Current Task",
             "Current Running Task not scheduled",
@@ -68,28 +68,45 @@
             this.columnHeaderDownloadImages = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderWebSite = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnStart = new System.Windows.Forms.Button();
-            this.chkDownloadImage = new System.Windows.Forms.CheckBox();
+            this.chkAdiDownloadImage = new System.Windows.Forms.CheckBox();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusActiveThreads = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusActiveThreadCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelSeperator1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusQueued = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusQueuesThreadsCount = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusSeperator2 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusExport = new System.Windows.Forms.ToolStripStatusLabel();
             this.StatusBarSyncTimer = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.timerSpider = new System.Windows.Forms.Timer(this.components);
             this.btnTimer = new System.Windows.Forms.Button();
             this.timerPingRate = new System.Windows.Forms.Timer(this.components);
-            this.chkIncognito = new System.Windows.Forms.CheckBox();
+            this.chkAdiIncognito = new System.Windows.Forms.CheckBox();
             this.timerTasks = new System.Windows.Forms.Timer(this.components);
             this.tabControlMain = new System.Windows.Forms.TabControl();
-            this.chkAdiProductsUncheckAll = new System.Windows.Forms.TabPage();
+            this.tabPageTasks = new System.Windows.Forms.TabPage();
+            this.tabPageAdiGlobal = new System.Windows.Forms.TabPage();
             this.cmbAdiMode = new System.Windows.Forms.ComboBox();
             this.toolBarAdiGlobal = new System.Windows.Forms.ToolBar();
             this.toolBarButtonAdiPriority = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonAdiReload = new System.Windows.Forms.ToolBarButton();
             this.toolBarButtonAdiScheduler = new System.Windows.Forms.ToolBarButton();
-            this.tabPageTasks = new System.Windows.Forms.TabPage();
+            this.tabPageSecLock = new System.Windows.Forms.TabPage();
+            this.chkSeclockIncognito = new System.Windows.Forms.CheckBox();
+            this.chkSeclockDownloadImages = new System.Windows.Forms.CheckBox();
+            this.toolBarSecLock = new System.Windows.Forms.ToolBar();
+            this.toolBarButtonSecLockRefresh = new System.Windows.Forms.ToolBarButton();
+            this.tabControlSecLock = new System.Windows.Forms.TabControl();
+            this.tabPageSeclockManufacturers = new System.Windows.Forms.TabPage();
+            this.chkSecLockManufanufacturersSelectAll = new System.Windows.Forms.CheckBox();
+            this.tvSecLockManufacturers = new System.Windows.Forms.TreeView();
+            this.tabPageSecLockCategories = new System.Windows.Forms.TabPage();
+            this.chkSecLockCategoriessSelectAll = new System.Windows.Forms.CheckBox();
+            this.tvSecLockCategories = new System.Windows.Forms.TreeView();
+            this.tabPageSecLockProducts = new System.Windows.Forms.TabPage();
+            this.chkSecLockProductsSelectAll = new System.Windows.Forms.CheckBox();
+            this.tvsecLockProducts = new System.Windows.Forms.TreeView();
             this.tabPageSettings = new System.Windows.Forms.TabPage();
             this.btnSettingsSave = new System.Windows.Forms.Button();
             this.btnSettingsCancel = new System.Windows.Forms.Button();
@@ -160,20 +177,35 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txtSmtpPassword = new System.Windows.Forms.TextBox();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.txtImagePrefix = new System.Windows.Forms.TextBox();
+            this.txtAdiGlobalImagePrefix = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
-            this.txtLoginPage = new System.Windows.Forms.TextBox();
+            this.txtAdiGlobalLoginPage = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.txtAdiCatagoryUpdateInterval = new System.Windows.Forms.TextBox();
+            this.txtAdiGlobalCatagoryUpdateInterval = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.txtAdiProductUpdateInterval = new System.Windows.Forms.TextBox();
-            this.txtADIPassword = new System.Windows.Forms.TextBox();
+            this.txtAdiGlobalProductUpdateInterval = new System.Windows.Forms.TextBox();
+            this.txtAdiGlobalPassword = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
-            this.txtADIUsername = new System.Windows.Forms.TextBox();
+            this.txtAdiGlobalUsername = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txtSecLockImagePrefix = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.txtSecLockLoginPage = new System.Windows.Forms.TextBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.txtSecLockCategoryUpdateInterval = new System.Windows.Forms.TextBox();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.txtSecLockUpdateInterval = new System.Windows.Forms.TextBox();
+            this.txtSecLockPassword = new System.Windows.Forms.TextBox();
+            this.label41 = new System.Windows.Forms.Label();
+            this.label43 = new System.Windows.Forms.Label();
+            this.txtSecLockUserName = new System.Windows.Forms.TextBox();
             this.contextMenuStripTaskEdit = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemIgnitoMode = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDownloadImages = new System.Windows.Forms.ToolStripMenuItem();
@@ -197,16 +229,19 @@
             this.label34 = new System.Windows.Forms.Label();
             this.btnNewSchedule = new System.Windows.Forms.Button();
             this.btnDeleteSchedule = new System.Windows.Forms.Button();
-            this.toolStripStatusExport = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripStatusSeperator2 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabAdiGlobal.SuspendLayout();
             this.tabPageAdiCategory.SuspendLayout();
             this.tabPageAdiBrand.SuspendLayout();
             this.tabPageAdiProducts.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControlMain.SuspendLayout();
-            this.chkAdiProductsUncheckAll.SuspendLayout();
             this.tabPageTasks.SuspendLayout();
+            this.tabPageAdiGlobal.SuspendLayout();
+            this.tabPageSecLock.SuspendLayout();
+            this.tabControlSecLock.SuspendLayout();
+            this.tabPageSeclockManufacturers.SuspendLayout();
+            this.tabPageSecLockCategories.SuspendLayout();
+            this.tabPageSecLockProducts.SuspendLayout();
             this.tabPageSettings.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabGeneral.SuspendLayout();
@@ -216,6 +251,7 @@
             this.Stockalert.SuspendLayout();
             this.tabMail.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.contextMenuStripTaskEdit.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -467,17 +503,17 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // chkDownloadImage
+            // chkAdiDownloadImage
             // 
-            this.chkDownloadImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.chkAdiDownloadImage.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkDownloadImage.AutoSize = true;
-            this.chkDownloadImage.Location = new System.Drawing.Point(755, 15);
-            this.chkDownloadImage.Name = "chkDownloadImage";
-            this.chkDownloadImage.Size = new System.Drawing.Size(151, 17);
-            this.chkDownloadImage.TabIndex = 19;
-            this.chkDownloadImage.Text = "Download Product Images";
-            this.chkDownloadImage.UseVisualStyleBackColor = true;
+            this.chkAdiDownloadImage.AutoSize = true;
+            this.chkAdiDownloadImage.Location = new System.Drawing.Point(755, 15);
+            this.chkAdiDownloadImage.Name = "chkAdiDownloadImage";
+            this.chkAdiDownloadImage.Size = new System.Drawing.Size(151, 17);
+            this.chkAdiDownloadImage.TabIndex = 19;
+            this.chkAdiDownloadImage.Text = "Download Product Images";
+            this.chkAdiDownloadImage.UseVisualStyleBackColor = true;
             // 
             // statusStrip1
             // 
@@ -529,6 +565,17 @@
             this.toolStripStatusQueuesThreadsCount.Size = new System.Drawing.Size(13, 17);
             this.toolStripStatusQueuesThreadsCount.Text = "0";
             // 
+            // toolStripStatusSeperator2
+            // 
+            this.toolStripStatusSeperator2.Name = "toolStripStatusSeperator2";
+            this.toolStripStatusSeperator2.Size = new System.Drawing.Size(10, 17);
+            this.toolStripStatusSeperator2.Text = "|";
+            // 
+            // toolStripStatusExport
+            // 
+            this.toolStripStatusExport.Name = "toolStripStatusExport";
+            this.toolStripStatusExport.Size = new System.Drawing.Size(0, 17);
+            // 
             // StatusBarSyncTimer
             // 
             this.StatusBarSyncTimer.Enabled = true;
@@ -565,17 +612,17 @@
             this.timerPingRate.Interval = 60000;
             this.timerPingRate.Tick += new System.EventHandler(this.timerPingRate_Tick);
             // 
-            // chkIncognito
+            // chkAdiIncognito
             // 
-            this.chkIncognito.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.chkAdiIncognito.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.chkIncognito.AutoSize = true;
-            this.chkIncognito.Location = new System.Drawing.Point(637, 15);
-            this.chkIncognito.Name = "chkIncognito";
-            this.chkIncognito.Size = new System.Drawing.Size(99, 17);
-            this.chkIncognito.TabIndex = 25;
-            this.chkIncognito.Text = "Incognito mode";
-            this.chkIncognito.UseVisualStyleBackColor = true;
+            this.chkAdiIncognito.AutoSize = true;
+            this.chkAdiIncognito.Location = new System.Drawing.Point(637, 15);
+            this.chkAdiIncognito.Name = "chkAdiIncognito";
+            this.chkAdiIncognito.Size = new System.Drawing.Size(99, 17);
+            this.chkAdiIncognito.TabIndex = 25;
+            this.chkAdiIncognito.Text = "Incognito mode";
+            this.chkAdiIncognito.UseVisualStyleBackColor = true;
             // 
             // timerTasks
             // 
@@ -587,30 +634,46 @@
             this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlMain.Controls.Add(this.chkAdiProductsUncheckAll);
             this.tabControlMain.Controls.Add(this.tabPageTasks);
+            this.tabControlMain.Controls.Add(this.tabPageAdiGlobal);
+            this.tabControlMain.Controls.Add(this.tabPageSecLock);
             this.tabControlMain.Controls.Add(this.tabPageSettings);
             this.tabControlMain.Location = new System.Drawing.Point(0, 1);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
             this.tabControlMain.Size = new System.Drawing.Size(961, 418);
             this.tabControlMain.TabIndex = 27;
+            this.tabControlMain.Selected += new System.Windows.Forms.TabControlEventHandler(this.tabControlMain_Selected);
             // 
-            // chkAdiProductsUncheckAll
+            // tabPageTasks
             // 
-            this.chkAdiProductsUncheckAll.Controls.Add(this.cmbAdiMode);
-            this.chkAdiProductsUncheckAll.Controls.Add(this.tabAdiGlobal);
-            this.chkAdiProductsUncheckAll.Controls.Add(this.chkIncognito);
-            this.chkAdiProductsUncheckAll.Controls.Add(this.label1);
-            this.chkAdiProductsUncheckAll.Controls.Add(this.chkDownloadImage);
-            this.chkAdiProductsUncheckAll.Controls.Add(this.toolBarAdiGlobal);
-            this.chkAdiProductsUncheckAll.Location = new System.Drawing.Point(4, 22);
-            this.chkAdiProductsUncheckAll.Name = "chkAdiProductsUncheckAll";
-            this.chkAdiProductsUncheckAll.Padding = new System.Windows.Forms.Padding(3);
-            this.chkAdiProductsUncheckAll.Size = new System.Drawing.Size(953, 392);
-            this.chkAdiProductsUncheckAll.TabIndex = 0;
-            this.chkAdiProductsUncheckAll.Text = "AdiGlobal.us";
-            this.chkAdiProductsUncheckAll.UseVisualStyleBackColor = true;
+            this.tabPageTasks.Controls.Add(this.listViewThreads);
+            this.tabPageTasks.Controls.Add(this.btnTimer);
+            this.tabPageTasks.Controls.Add(this.btnStart);
+            this.tabPageTasks.Controls.Add(this.toolBarTasks);
+            this.tabPageTasks.Location = new System.Drawing.Point(4, 22);
+            this.tabPageTasks.Name = "tabPageTasks";
+            this.tabPageTasks.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageTasks.Size = new System.Drawing.Size(953, 392);
+            this.tabPageTasks.TabIndex = 1;
+            this.tabPageTasks.Text = "Tasks";
+            this.tabPageTasks.UseVisualStyleBackColor = true;
+            // 
+            // tabPageAdiGlobal
+            // 
+            this.tabPageAdiGlobal.Controls.Add(this.cmbAdiMode);
+            this.tabPageAdiGlobal.Controls.Add(this.tabAdiGlobal);
+            this.tabPageAdiGlobal.Controls.Add(this.chkAdiIncognito);
+            this.tabPageAdiGlobal.Controls.Add(this.label1);
+            this.tabPageAdiGlobal.Controls.Add(this.chkAdiDownloadImage);
+            this.tabPageAdiGlobal.Controls.Add(this.toolBarAdiGlobal);
+            this.tabPageAdiGlobal.Location = new System.Drawing.Point(4, 22);
+            this.tabPageAdiGlobal.Name = "tabPageAdiGlobal";
+            this.tabPageAdiGlobal.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageAdiGlobal.Size = new System.Drawing.Size(953, 392);
+            this.tabPageAdiGlobal.TabIndex = 0;
+            this.tabPageAdiGlobal.Text = "AdiGlobal.us";
+            this.tabPageAdiGlobal.UseVisualStyleBackColor = true;
             // 
             // cmbAdiMode
             // 
@@ -669,19 +732,177 @@
             this.toolBarButtonAdiScheduler.Name = "toolBarButtonAdiScheduler";
             this.toolBarButtonAdiScheduler.ToolTipText = "Scheduler";
             // 
-            // tabPageTasks
+            // tabPageSecLock
             // 
-            this.tabPageTasks.Controls.Add(this.listViewThreads);
-            this.tabPageTasks.Controls.Add(this.btnTimer);
-            this.tabPageTasks.Controls.Add(this.btnStart);
-            this.tabPageTasks.Controls.Add(this.toolBarTasks);
-            this.tabPageTasks.Location = new System.Drawing.Point(4, 22);
-            this.tabPageTasks.Name = "tabPageTasks";
-            this.tabPageTasks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageTasks.Size = new System.Drawing.Size(953, 392);
-            this.tabPageTasks.TabIndex = 1;
-            this.tabPageTasks.Text = "Tasks";
-            this.tabPageTasks.UseVisualStyleBackColor = true;
+            this.tabPageSecLock.Controls.Add(this.chkSeclockIncognito);
+            this.tabPageSecLock.Controls.Add(this.chkSeclockDownloadImages);
+            this.tabPageSecLock.Controls.Add(this.toolBarSecLock);
+            this.tabPageSecLock.Controls.Add(this.tabControlSecLock);
+            this.tabPageSecLock.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSecLock.Name = "tabPageSecLock";
+            this.tabPageSecLock.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSecLock.Size = new System.Drawing.Size(953, 392);
+            this.tabPageSecLock.TabIndex = 3;
+            this.tabPageSecLock.Text = "SecLock.com";
+            this.tabPageSecLock.UseVisualStyleBackColor = true;
+            // 
+            // chkSeclockIncognito
+            // 
+            this.chkSeclockIncognito.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkSeclockIncognito.AutoSize = true;
+            this.chkSeclockIncognito.Location = new System.Drawing.Point(641, 17);
+            this.chkSeclockIncognito.Name = "chkSeclockIncognito";
+            this.chkSeclockIncognito.Size = new System.Drawing.Size(99, 17);
+            this.chkSeclockIncognito.TabIndex = 31;
+            this.chkSeclockIncognito.Text = "Incognito mode";
+            this.chkSeclockIncognito.UseVisualStyleBackColor = true;
+            this.chkSeclockIncognito.Visible = false;
+            // 
+            // chkSeclockDownloadImages
+            // 
+            this.chkSeclockDownloadImages.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chkSeclockDownloadImages.AutoSize = true;
+            this.chkSeclockDownloadImages.Location = new System.Drawing.Point(759, 17);
+            this.chkSeclockDownloadImages.Name = "chkSeclockDownloadImages";
+            this.chkSeclockDownloadImages.Size = new System.Drawing.Size(151, 17);
+            this.chkSeclockDownloadImages.TabIndex = 30;
+            this.chkSeclockDownloadImages.Text = "Download Product Images";
+            this.chkSeclockDownloadImages.UseVisualStyleBackColor = true;
+            // 
+            // toolBarSecLock
+            // 
+            this.toolBarSecLock.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.toolBarSecLock.Appearance = System.Windows.Forms.ToolBarAppearance.Flat;
+            this.toolBarSecLock.AutoSize = false;
+            this.toolBarSecLock.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
+            this.toolBarButtonSecLockRefresh});
+            this.toolBarSecLock.ButtonSize = new System.Drawing.Size(16, 16);
+            this.toolBarSecLock.Dock = System.Windows.Forms.DockStyle.None;
+            this.toolBarSecLock.DropDownArrows = true;
+            this.toolBarSecLock.ImageList = this.imageList2;
+            this.toolBarSecLock.Location = new System.Drawing.Point(10, 6);
+            this.toolBarSecLock.Name = "toolBarSecLock";
+            this.toolBarSecLock.ShowToolTips = true;
+            this.toolBarSecLock.Size = new System.Drawing.Size(943, 28);
+            this.toolBarSecLock.TabIndex = 29;
+            this.toolBarSecLock.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.toolBarSecLock_ButtonClick);
+            // 
+            // toolBarButtonSecLockRefresh
+            // 
+            this.toolBarButtonSecLockRefresh.ImageIndex = 9;
+            this.toolBarButtonSecLockRefresh.Name = "toolBarButtonSecLockRefresh";
+            this.toolBarButtonSecLockRefresh.ToolTipText = "Refresh";
+            // 
+            // tabControlSecLock
+            // 
+            this.tabControlSecLock.Controls.Add(this.tabPageSeclockManufacturers);
+            this.tabControlSecLock.Controls.Add(this.tabPageSecLockCategories);
+            this.tabControlSecLock.Controls.Add(this.tabPageSecLockProducts);
+            this.tabControlSecLock.Location = new System.Drawing.Point(6, 40);
+            this.tabControlSecLock.Name = "tabControlSecLock";
+            this.tabControlSecLock.SelectedIndex = 0;
+            this.tabControlSecLock.Size = new System.Drawing.Size(939, 346);
+            this.tabControlSecLock.TabIndex = 1;
+            // 
+            // tabPageSeclockManufacturers
+            // 
+            this.tabPageSeclockManufacturers.Controls.Add(this.chkSecLockManufanufacturersSelectAll);
+            this.tabPageSeclockManufacturers.Controls.Add(this.tvSecLockManufacturers);
+            this.tabPageSeclockManufacturers.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSeclockManufacturers.Name = "tabPageSeclockManufacturers";
+            this.tabPageSeclockManufacturers.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSeclockManufacturers.Size = new System.Drawing.Size(931, 320);
+            this.tabPageSeclockManufacturers.TabIndex = 0;
+            this.tabPageSeclockManufacturers.Text = "Manufacturers";
+            this.tabPageSeclockManufacturers.UseVisualStyleBackColor = true;
+            // 
+            // chkSecLockManufanufacturersSelectAll
+            // 
+            this.chkSecLockManufanufacturersSelectAll.AutoSize = true;
+            this.chkSecLockManufanufacturersSelectAll.Location = new System.Drawing.Point(830, 15);
+            this.chkSecLockManufanufacturersSelectAll.Name = "chkSecLockManufanufacturersSelectAll";
+            this.chkSecLockManufanufacturersSelectAll.Size = new System.Drawing.Size(70, 17);
+            this.chkSecLockManufanufacturersSelectAll.TabIndex = 1;
+            this.chkSecLockManufanufacturersSelectAll.Text = "Select All";
+            this.chkSecLockManufanufacturersSelectAll.UseVisualStyleBackColor = true;
+            this.chkSecLockManufanufacturersSelectAll.CheckedChanged += new System.EventHandler(this.chkSecLockManufanufacturersSelectAll_CheckedChanged);
+            // 
+            // tvSecLockManufacturers
+            // 
+            this.tvSecLockManufacturers.CheckBoxes = true;
+            this.tvSecLockManufacturers.Location = new System.Drawing.Point(6, 6);
+            this.tvSecLockManufacturers.Name = "tvSecLockManufacturers";
+            this.tvSecLockManufacturers.Size = new System.Drawing.Size(919, 308);
+            this.tvSecLockManufacturers.TabIndex = 0;
+            this.tvSecLockManufacturers.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvSecLockManufacturers_AfterCheck);
+            // 
+            // tabPageSecLockCategories
+            // 
+            this.tabPageSecLockCategories.Controls.Add(this.chkSecLockCategoriessSelectAll);
+            this.tabPageSecLockCategories.Controls.Add(this.tvSecLockCategories);
+            this.tabPageSecLockCategories.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSecLockCategories.Name = "tabPageSecLockCategories";
+            this.tabPageSecLockCategories.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSecLockCategories.Size = new System.Drawing.Size(931, 320);
+            this.tabPageSecLockCategories.TabIndex = 1;
+            this.tabPageSecLockCategories.Text = "Categories";
+            this.tabPageSecLockCategories.UseVisualStyleBackColor = true;
+            // 
+            // chkSecLockCategoriessSelectAll
+            // 
+            this.chkSecLockCategoriessSelectAll.AutoSize = true;
+            this.chkSecLockCategoriessSelectAll.Location = new System.Drawing.Point(830, 15);
+            this.chkSecLockCategoriessSelectAll.Name = "chkSecLockCategoriessSelectAll";
+            this.chkSecLockCategoriessSelectAll.Size = new System.Drawing.Size(70, 17);
+            this.chkSecLockCategoriessSelectAll.TabIndex = 2;
+            this.chkSecLockCategoriessSelectAll.Text = "Select All";
+            this.chkSecLockCategoriessSelectAll.UseVisualStyleBackColor = true;
+            this.chkSecLockCategoriessSelectAll.CheckedChanged += new System.EventHandler(this.chkSecLockCategoriessSelectAll_CheckedChanged);
+            // 
+            // tvSecLockCategories
+            // 
+            this.tvSecLockCategories.CheckBoxes = true;
+            this.tvSecLockCategories.Location = new System.Drawing.Point(7, 7);
+            this.tvSecLockCategories.Name = "tvSecLockCategories";
+            this.tvSecLockCategories.Size = new System.Drawing.Size(918, 307);
+            this.tvSecLockCategories.TabIndex = 0;
+            this.tvSecLockCategories.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvSecLockCategories_AfterCheck);
+            // 
+            // tabPageSecLockProducts
+            // 
+            this.tabPageSecLockProducts.Controls.Add(this.chkSecLockProductsSelectAll);
+            this.tabPageSecLockProducts.Controls.Add(this.tvsecLockProducts);
+            this.tabPageSecLockProducts.Location = new System.Drawing.Point(4, 22);
+            this.tabPageSecLockProducts.Name = "tabPageSecLockProducts";
+            this.tabPageSecLockProducts.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageSecLockProducts.Size = new System.Drawing.Size(931, 320);
+            this.tabPageSecLockProducts.TabIndex = 2;
+            this.tabPageSecLockProducts.Text = "Products";
+            this.tabPageSecLockProducts.UseVisualStyleBackColor = true;
+            // 
+            // chkSecLockProductsSelectAll
+            // 
+            this.chkSecLockProductsSelectAll.AutoSize = true;
+            this.chkSecLockProductsSelectAll.Location = new System.Drawing.Point(830, 15);
+            this.chkSecLockProductsSelectAll.Name = "chkSecLockProductsSelectAll";
+            this.chkSecLockProductsSelectAll.Size = new System.Drawing.Size(70, 17);
+            this.chkSecLockProductsSelectAll.TabIndex = 2;
+            this.chkSecLockProductsSelectAll.Text = "Select All";
+            this.chkSecLockProductsSelectAll.UseVisualStyleBackColor = true;
+            this.chkSecLockProductsSelectAll.CheckedChanged += new System.EventHandler(this.chkSecLockProductsSelectAll_CheckedChanged);
+            // 
+            // tvsecLockProducts
+            // 
+            this.tvsecLockProducts.CheckBoxes = true;
+            this.tvsecLockProducts.Location = new System.Drawing.Point(6, 7);
+            this.tvsecLockProducts.Name = "tvsecLockProducts";
+            this.tvsecLockProducts.Size = new System.Drawing.Size(918, 307);
+            this.tvsecLockProducts.TabIndex = 1;
+            this.tvsecLockProducts.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.tvsecLockProducts_AfterCheck);
             // 
             // tabPageSettings
             // 
@@ -721,6 +942,7 @@
             this.tabControl1.Controls.Add(this.tabGeneral);
             this.tabControl1.Controls.Add(this.tabMail);
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(8, 6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -1522,20 +1744,20 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.txtImagePrefix);
+            this.tabPage1.Controls.Add(this.txtAdiGlobalImagePrefix);
             this.tabPage1.Controls.Add(this.label12);
             this.tabPage1.Controls.Add(this.label31);
-            this.tabPage1.Controls.Add(this.txtLoginPage);
+            this.tabPage1.Controls.Add(this.txtAdiGlobalLoginPage);
             this.tabPage1.Controls.Add(this.label18);
             this.tabPage1.Controls.Add(this.label19);
-            this.tabPage1.Controls.Add(this.txtAdiCatagoryUpdateInterval);
+            this.tabPage1.Controls.Add(this.txtAdiGlobalCatagoryUpdateInterval);
             this.tabPage1.Controls.Add(this.label17);
             this.tabPage1.Controls.Add(this.label16);
-            this.tabPage1.Controls.Add(this.txtAdiProductUpdateInterval);
-            this.tabPage1.Controls.Add(this.txtADIPassword);
+            this.tabPage1.Controls.Add(this.txtAdiGlobalProductUpdateInterval);
+            this.tabPage1.Controls.Add(this.txtAdiGlobalPassword);
             this.tabPage1.Controls.Add(this.label13);
             this.tabPage1.Controls.Add(this.label33);
-            this.tabPage1.Controls.Add(this.txtADIUsername);
+            this.tabPage1.Controls.Add(this.txtAdiGlobalUsername);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -1544,12 +1766,12 @@
             this.tabPage1.Text = "Adi Global";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // txtImagePrefix
+            // txtAdiGlobalImagePrefix
             // 
-            this.txtImagePrefix.Location = new System.Drawing.Point(138, 141);
-            this.txtImagePrefix.Name = "txtImagePrefix";
-            this.txtImagePrefix.Size = new System.Drawing.Size(293, 20);
-            this.txtImagePrefix.TabIndex = 44;
+            this.txtAdiGlobalImagePrefix.Location = new System.Drawing.Point(138, 141);
+            this.txtAdiGlobalImagePrefix.Name = "txtAdiGlobalImagePrefix";
+            this.txtAdiGlobalImagePrefix.Size = new System.Drawing.Size(293, 20);
+            this.txtAdiGlobalImagePrefix.TabIndex = 44;
             // 
             // label12
             // 
@@ -1569,12 +1791,12 @@
             this.label31.TabIndex = 41;
             this.label31.Text = "Login Page";
             // 
-            // txtLoginPage
+            // txtAdiGlobalLoginPage
             // 
-            this.txtLoginPage.Location = new System.Drawing.Point(138, 10);
-            this.txtLoginPage.Name = "txtLoginPage";
-            this.txtLoginPage.Size = new System.Drawing.Size(293, 20);
-            this.txtLoginPage.TabIndex = 42;
+            this.txtAdiGlobalLoginPage.Location = new System.Drawing.Point(138, 10);
+            this.txtAdiGlobalLoginPage.Name = "txtAdiGlobalLoginPage";
+            this.txtAdiGlobalLoginPage.Size = new System.Drawing.Size(293, 20);
+            this.txtAdiGlobalLoginPage.TabIndex = 42;
             // 
             // label18
             // 
@@ -1596,14 +1818,14 @@
             this.label19.Text = "Catagory update interval";
             this.label19.Visible = false;
             // 
-            // txtAdiCatagoryUpdateInterval
+            // txtAdiGlobalCatagoryUpdateInterval
             // 
-            this.txtAdiCatagoryUpdateInterval.Location = new System.Drawing.Point(138, 115);
-            this.txtAdiCatagoryUpdateInterval.Name = "txtAdiCatagoryUpdateInterval";
-            this.txtAdiCatagoryUpdateInterval.Size = new System.Drawing.Size(244, 20);
-            this.txtAdiCatagoryUpdateInterval.TabIndex = 38;
-            this.txtAdiCatagoryUpdateInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtAdiCatagoryUpdateInterval.Visible = false;
+            this.txtAdiGlobalCatagoryUpdateInterval.Location = new System.Drawing.Point(138, 115);
+            this.txtAdiGlobalCatagoryUpdateInterval.Name = "txtAdiGlobalCatagoryUpdateInterval";
+            this.txtAdiGlobalCatagoryUpdateInterval.Size = new System.Drawing.Size(244, 20);
+            this.txtAdiGlobalCatagoryUpdateInterval.TabIndex = 38;
+            this.txtAdiGlobalCatagoryUpdateInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtAdiGlobalCatagoryUpdateInterval.Visible = false;
             // 
             // label17
             // 
@@ -1625,22 +1847,22 @@
             this.label16.Text = "Default update interval";
             this.label16.Visible = false;
             // 
-            // txtAdiProductUpdateInterval
+            // txtAdiGlobalProductUpdateInterval
             // 
-            this.txtAdiProductUpdateInterval.Location = new System.Drawing.Point(138, 89);
-            this.txtAdiProductUpdateInterval.Name = "txtAdiProductUpdateInterval";
-            this.txtAdiProductUpdateInterval.Size = new System.Drawing.Size(244, 20);
-            this.txtAdiProductUpdateInterval.TabIndex = 35;
-            this.txtAdiProductUpdateInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtAdiProductUpdateInterval.Visible = false;
+            this.txtAdiGlobalProductUpdateInterval.Location = new System.Drawing.Point(138, 89);
+            this.txtAdiGlobalProductUpdateInterval.Name = "txtAdiGlobalProductUpdateInterval";
+            this.txtAdiGlobalProductUpdateInterval.Size = new System.Drawing.Size(244, 20);
+            this.txtAdiGlobalProductUpdateInterval.TabIndex = 35;
+            this.txtAdiGlobalProductUpdateInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtAdiGlobalProductUpdateInterval.Visible = false;
             // 
-            // txtADIPassword
+            // txtAdiGlobalPassword
             // 
-            this.txtADIPassword.Location = new System.Drawing.Point(138, 62);
-            this.txtADIPassword.Name = "txtADIPassword";
-            this.txtADIPassword.PasswordChar = '●';
-            this.txtADIPassword.Size = new System.Drawing.Size(293, 20);
-            this.txtADIPassword.TabIndex = 34;
+            this.txtAdiGlobalPassword.Location = new System.Drawing.Point(138, 62);
+            this.txtAdiGlobalPassword.Name = "txtAdiGlobalPassword";
+            this.txtAdiGlobalPassword.PasswordChar = '●';
+            this.txtAdiGlobalPassword.Size = new System.Drawing.Size(293, 20);
+            this.txtAdiGlobalPassword.TabIndex = 34;
             // 
             // label13
             // 
@@ -1660,12 +1882,159 @@
             this.label33.TabIndex = 32;
             this.label33.Text = "Site Username";
             // 
-            // txtADIUsername
+            // txtAdiGlobalUsername
             // 
-            this.txtADIUsername.Location = new System.Drawing.Point(138, 36);
-            this.txtADIUsername.Name = "txtADIUsername";
-            this.txtADIUsername.Size = new System.Drawing.Size(293, 20);
-            this.txtADIUsername.TabIndex = 33;
+            this.txtAdiGlobalUsername.Location = new System.Drawing.Point(138, 36);
+            this.txtAdiGlobalUsername.Name = "txtAdiGlobalUsername";
+            this.txtAdiGlobalUsername.Size = new System.Drawing.Size(293, 20);
+            this.txtAdiGlobalUsername.TabIndex = 33;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.txtSecLockImagePrefix);
+            this.tabPage2.Controls.Add(this.label35);
+            this.tabPage2.Controls.Add(this.label36);
+            this.tabPage2.Controls.Add(this.txtSecLockLoginPage);
+            this.tabPage2.Controls.Add(this.label37);
+            this.tabPage2.Controls.Add(this.label38);
+            this.tabPage2.Controls.Add(this.txtSecLockCategoryUpdateInterval);
+            this.tabPage2.Controls.Add(this.label39);
+            this.tabPage2.Controls.Add(this.label40);
+            this.tabPage2.Controls.Add(this.txtSecLockUpdateInterval);
+            this.tabPage2.Controls.Add(this.txtSecLockPassword);
+            this.tabPage2.Controls.Add(this.label41);
+            this.tabPage2.Controls.Add(this.label43);
+            this.tabPage2.Controls.Add(this.txtSecLockUserName);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(929, 304);
+            this.tabPage2.TabIndex = 3;
+            this.tabPage2.Text = "SecLock";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // txtSecLockImagePrefix
+            // 
+            this.txtSecLockImagePrefix.Location = new System.Drawing.Point(137, 141);
+            this.txtSecLockImagePrefix.Name = "txtSecLockImagePrefix";
+            this.txtSecLockImagePrefix.Size = new System.Drawing.Size(293, 20);
+            this.txtSecLockImagePrefix.TabIndex = 58;
+            // 
+            // label35
+            // 
+            this.label35.AutoSize = true;
+            this.label35.Location = new System.Drawing.Point(14, 144);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(65, 13);
+            this.label35.TabIndex = 57;
+            this.label35.Text = "Image Prefix";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Location = new System.Drawing.Point(14, 13);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(61, 13);
+            this.label36.TabIndex = 55;
+            this.label36.Text = "Login Page";
+            // 
+            // txtSecLockLoginPage
+            // 
+            this.txtSecLockLoginPage.Location = new System.Drawing.Point(137, 10);
+            this.txtSecLockLoginPage.Name = "txtSecLockLoginPage";
+            this.txtSecLockLoginPage.Size = new System.Drawing.Size(293, 20);
+            this.txtSecLockLoginPage.TabIndex = 56;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.Location = new System.Drawing.Point(387, 115);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(43, 13);
+            this.label37.TabIndex = 54;
+            this.label37.Text = "minutes";
+            this.label37.Visible = false;
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.Location = new System.Drawing.Point(14, 118);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(122, 13);
+            this.label38.TabIndex = 53;
+            this.label38.Text = "Catagory update interval";
+            this.label38.Visible = false;
+            // 
+            // txtSecLockCategoryUpdateInterval
+            // 
+            this.txtSecLockCategoryUpdateInterval.Location = new System.Drawing.Point(137, 115);
+            this.txtSecLockCategoryUpdateInterval.Name = "txtSecLockCategoryUpdateInterval";
+            this.txtSecLockCategoryUpdateInterval.Size = new System.Drawing.Size(244, 20);
+            this.txtSecLockCategoryUpdateInterval.TabIndex = 52;
+            this.txtSecLockCategoryUpdateInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtSecLockCategoryUpdateInterval.Visible = false;
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.Location = new System.Drawing.Point(387, 89);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(43, 13);
+            this.label39.TabIndex = 51;
+            this.label39.Text = "minutes";
+            this.label39.Visible = false;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.Location = new System.Drawing.Point(14, 92);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(114, 13);
+            this.label40.TabIndex = 50;
+            this.label40.Text = "Default update interval";
+            this.label40.Visible = false;
+            // 
+            // txtSecLockUpdateInterval
+            // 
+            this.txtSecLockUpdateInterval.Location = new System.Drawing.Point(137, 89);
+            this.txtSecLockUpdateInterval.Name = "txtSecLockUpdateInterval";
+            this.txtSecLockUpdateInterval.Size = new System.Drawing.Size(244, 20);
+            this.txtSecLockUpdateInterval.TabIndex = 49;
+            this.txtSecLockUpdateInterval.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtSecLockUpdateInterval.Visible = false;
+            // 
+            // txtSecLockPassword
+            // 
+            this.txtSecLockPassword.Location = new System.Drawing.Point(137, 62);
+            this.txtSecLockPassword.Name = "txtSecLockPassword";
+            this.txtSecLockPassword.PasswordChar = '●';
+            this.txtSecLockPassword.Size = new System.Drawing.Size(293, 20);
+            this.txtSecLockPassword.TabIndex = 48;
+            // 
+            // label41
+            // 
+            this.label41.AutoSize = true;
+            this.label41.Location = new System.Drawing.Point(14, 65);
+            this.label41.Name = "label41";
+            this.label41.Size = new System.Drawing.Size(74, 13);
+            this.label41.TabIndex = 45;
+            this.label41.Text = "Site Password";
+            // 
+            // label43
+            // 
+            this.label43.AutoSize = true;
+            this.label43.Location = new System.Drawing.Point(14, 39);
+            this.label43.Name = "label43";
+            this.label43.Size = new System.Drawing.Size(76, 13);
+            this.label43.TabIndex = 46;
+            this.label43.Text = "Site Username";
+            // 
+            // txtSecLockUserName
+            // 
+            this.txtSecLockUserName.Location = new System.Drawing.Point(137, 36);
+            this.txtSecLockUserName.Name = "txtSecLockUserName";
+            this.txtSecLockUserName.Size = new System.Drawing.Size(293, 20);
+            this.txtSecLockUserName.TabIndex = 47;
             // 
             // contextMenuStripTaskEdit
             // 
@@ -1739,9 +2108,9 @@
             this.listViewScheduleTasks.FullRowSelect = true;
             this.listViewScheduleTasks.GridLines = true;
             this.listViewScheduleTasks.HideSelection = false;
-            listViewItem3.Tag = "";
+            listViewItem1.Tag = "";
             this.listViewScheduleTasks.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem3});
+            listViewItem1});
             this.listViewScheduleTasks.Location = new System.Drawing.Point(0, 445);
             this.listViewScheduleTasks.MultiSelect = false;
             this.listViewScheduleTasks.Name = "listViewScheduleTasks";
@@ -1826,17 +2195,6 @@
             this.btnDeleteSchedule.UseVisualStyleBackColor = true;
             this.btnDeleteSchedule.Click += new System.EventHandler(this.btnDeleteSchedule_Click);
             // 
-            // toolStripStatusExport
-            // 
-            this.toolStripStatusExport.Name = "toolStripStatusExport";
-            this.toolStripStatusExport.Size = new System.Drawing.Size(0, 17);
-            // 
-            // toolStripStatusSeperator2
-            // 
-            this.toolStripStatusSeperator2.Name = "toolStripStatusSeperator2";
-            this.toolStripStatusSeperator2.Size = new System.Drawing.Size(10, 17);
-            this.toolStripStatusSeperator2.Text = "|";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1861,10 +2219,19 @@
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tabControlMain.ResumeLayout(false);
-            this.chkAdiProductsUncheckAll.ResumeLayout(false);
-            this.chkAdiProductsUncheckAll.PerformLayout();
             this.tabPageTasks.ResumeLayout(false);
             this.tabPageTasks.PerformLayout();
+            this.tabPageAdiGlobal.ResumeLayout(false);
+            this.tabPageAdiGlobal.PerformLayout();
+            this.tabPageSecLock.ResumeLayout(false);
+            this.tabPageSecLock.PerformLayout();
+            this.tabControlSecLock.ResumeLayout(false);
+            this.tabPageSeclockManufacturers.ResumeLayout(false);
+            this.tabPageSeclockManufacturers.PerformLayout();
+            this.tabPageSecLockCategories.ResumeLayout(false);
+            this.tabPageSecLockCategories.PerformLayout();
+            this.tabPageSecLockProducts.ResumeLayout(false);
+            this.tabPageSecLockProducts.PerformLayout();
             this.tabPageSettings.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabGeneral.ResumeLayout(false);
@@ -1881,6 +2248,8 @@
             this.tabMail.PerformLayout();
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.contextMenuStripTaskEdit.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1912,7 +2281,7 @@
         private System.Windows.Forms.ColumnHeader columnHeaderTaskNameValue;
         private System.Windows.Forms.ColumnHeader columnHeaderTaskName;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.CheckBox chkDownloadImage;
+        private System.Windows.Forms.CheckBox chkAdiDownloadImage;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusActiveThreads;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusActiveThreadCount;
@@ -1928,11 +2297,11 @@
         private System.Windows.Forms.Timer timerSpider;
         private System.Windows.Forms.Button btnTimer;
         private System.Windows.Forms.Timer timerPingRate;
-        private System.Windows.Forms.CheckBox chkIncognito;
+        private System.Windows.Forms.CheckBox chkAdiIncognito;
         private System.Windows.Forms.ColumnHeader columnHeaderWebSite;
         private System.Windows.Forms.Timer timerTasks;
         private System.Windows.Forms.TabControl tabControlMain;
-        private System.Windows.Forms.TabPage chkAdiProductsUncheckAll;
+        private System.Windows.Forms.TabPage tabPageAdiGlobal;
         private System.Windows.Forms.TabPage tabPageTasks;
         private System.Windows.Forms.ComboBox cmbAdiMode;
         private System.Windows.Forms.ContextMenuStrip contextMenuStripTaskEdit;
@@ -2019,20 +2388,20 @@
         private System.Windows.Forms.Button btnSettingsCancel;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
-        private System.Windows.Forms.TextBox txtImagePrefix;
+        private System.Windows.Forms.TextBox txtAdiGlobalImagePrefix;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.TextBox txtLoginPage;
+        private System.Windows.Forms.TextBox txtAdiGlobalLoginPage;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox txtAdiCatagoryUpdateInterval;
+        private System.Windows.Forms.TextBox txtAdiGlobalCatagoryUpdateInterval;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox txtAdiProductUpdateInterval;
-        private System.Windows.Forms.TextBox txtADIPassword;
+        private System.Windows.Forms.TextBox txtAdiGlobalProductUpdateInterval;
+        private System.Windows.Forms.TextBox txtAdiGlobalPassword;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.TextBox txtADIUsername;
+        private System.Windows.Forms.TextBox txtAdiGlobalUsername;
         private System.Windows.Forms.TabPage tabPageAdiProducts;
         private System.Windows.Forms.TreeView treeViewAdiProducts;
         private System.Windows.Forms.CheckBox chkAdiProductsCheckAll;
@@ -2057,6 +2426,36 @@
         private System.Windows.Forms.Button btnCleanDb;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusSeperator2;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusExport;
+        private System.Windows.Forms.TabPage tabPageSecLock;
+        private System.Windows.Forms.TreeView tvSecLockManufacturers;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TextBox txtSecLockImagePrefix;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.TextBox txtSecLockLoginPage;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.Label label38;
+        private System.Windows.Forms.TextBox txtSecLockCategoryUpdateInterval;
+        private System.Windows.Forms.Label label39;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.TextBox txtSecLockUpdateInterval;
+        private System.Windows.Forms.TextBox txtSecLockPassword;
+        private System.Windows.Forms.Label label41;
+        private System.Windows.Forms.Label label43;
+        private System.Windows.Forms.TextBox txtSecLockUserName;
+        private System.Windows.Forms.TabControl tabControlSecLock;
+        private System.Windows.Forms.TabPage tabPageSeclockManufacturers;
+        private System.Windows.Forms.TabPage tabPageSecLockCategories;
+        private System.Windows.Forms.TreeView tvSecLockCategories;
+        private System.Windows.Forms.ToolBar toolBarSecLock;
+        private System.Windows.Forms.ToolBarButton toolBarButtonSecLockRefresh;
+        private System.Windows.Forms.TabPage tabPageSecLockProducts;
+        private System.Windows.Forms.TreeView tvsecLockProducts;
+        private System.Windows.Forms.CheckBox chkSeclockIncognito;
+        private System.Windows.Forms.CheckBox chkSeclockDownloadImages;
+        private System.Windows.Forms.CheckBox chkSecLockManufanufacturersSelectAll;
+        private System.Windows.Forms.CheckBox chkSecLockCategoriessSelectAll;
+        private System.Windows.Forms.CheckBox chkSecLockProductsSelectAll;
     }
 }
 
