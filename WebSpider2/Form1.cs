@@ -1651,6 +1651,7 @@ namespace WebSpider
 
                 Settings.SetValue("CrawlImageFolder", typeof(String), txtCrawlImageFolder.Text);
                 Settings.SetValue("UpdateImageFolder", typeof(String), txtUpdateImageFolder.Text);
+                Settings.SetValue("DocFolder", typeof(String), txtDocFolder.Text);
 
                 #endregion
 
@@ -1739,6 +1740,7 @@ namespace WebSpider
 
                 txtCrawlImageFolder.Text = Settings.GetValue("CrawlImageFolder");
                 txtUpdateImageFolder.Text = Settings.GetValue("UpdateImageFolder");
+                txtDocFolder.Text = Settings.GetValue("DocFolder");
                 #endregion
 
                 #region [EMAIL]
@@ -1834,6 +1836,11 @@ namespace WebSpider
         private void btnCrawlImageBrowse_Click(object sender, EventArgs e)
         {
             BrowseFolder(txtCrawlImageFolder);
+        }
+
+        private void btnDocFolderBrowse_Click(object sender, EventArgs e)
+        {
+            BrowseFolder(txtDocFolder);
         }
 
         private void btnUpdateImageBrowse_Click(object sender, EventArgs e)
@@ -2200,6 +2207,8 @@ namespace WebSpider
                 }
             }
         }
+
+        
     }
     
 

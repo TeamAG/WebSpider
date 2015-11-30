@@ -21,19 +21,19 @@ namespace WebSpider.SecLock.Data.Internal
         #region [ Get Data ]
         public List<InManufacturerSeries> GetData()
         {
-            String Query = "SELECT * FROM SecLockManufacturerSeries WITH (NOLOCK) ORDER BY Name";
+            String Query = "SELECT * FROM SecLockManufacturerSeries ORDER BY Name";
             OleDbDataManager oDm = new OleDbDataManager(this.ConnectionString, Query, true);
             return DataParser.ToList<InManufacturerSeries>(oDm.GetTable());
         }
         public List<InManufacturerSeries> GetData(InManufacturer manufacturer)
         {
-            String Query = "SELECT * FROM SecLockManufacturerSeries WITH (NOLOCK) WHERE ManufacturerCode = '" + manufacturer.Code + "' ORDER BY Name";
+            String Query = "SELECT * FROM SecLockManufacturerSeries WHERE ManufacturerCode = '" + manufacturer.Code + "' ORDER BY Name";
             OleDbDataManager oDm = new OleDbDataManager(this.ConnectionString, Query, true);
             return DataParser.ToList<InManufacturerSeries>(oDm.GetTable());
         }
         public List<InManufacturerSeries> GetData(InManufacturerSeries manufacturer)
         {
-            String Query = "SELECT * FROM SecLockManufacturerSeries WITH (NOLOCK) WHERE ID = '" + manufacturer.ID +"' ORDER BY Name";
+            String Query = "SELECT * FROM SecLockManufacturerSeries WHERE ID = " + manufacturer.ID +" ORDER BY Name";
             OleDbDataManager oDm = new OleDbDataManager(this.ConnectionString, Query, true);
             return DataParser.ToList<InManufacturerSeries>(oDm.GetTable());
         }

@@ -362,25 +362,75 @@ namespace WebSpider.Core
             if (!ReferenceEquals(modalBody, null))
             {
                 var modalBodyP = modalBody.SelectNodes("p");
-                
 
-                if (!ReferenceEquals(modalBodyP[2], null))
+                int descIndex = 1;
+                if (modalBodyP[0].Descendants("img").Count() > 0)
+                    descIndex = 2;
+
+                if (!ReferenceEquals(modalBodyP[descIndex], null))
                 {
-                    var description = modalBodyP[2].InnerHtml;
-                    p.Description = description.Trim();
+                    var description = modalBodyP[descIndex].InnerHtml;
+                    p.Description = description.Trim().Replace('\'', '\"');
                 }
 
-                if (!ReferenceEquals(modalBodyP[4], null))
-                {
-                    var techDocs = modalBodyP[4].InnerHtml;
-                    p.TechDoc = techDocs.Trim();
-                }
+                //if (!ReferenceEquals(modalBodyTechDocs, null))
+                //{
+                //    var techDocs = modalBodyTechDocs.FirstOrDefault().InnerHtml;
+                //    p.TechDoc = techDocs.Trim();
+                //}
 
-                var manLinksNode =modalBody.SelectNodes("//ul[@class='techdocs']").FirstOrDefault();
-                if (!ReferenceEquals(manLinksNode, null))
+                #region [ Tech Docs Download ]
+                var modalBodyTechDocs = modalBody.SelectNodes("//ul[@class='techdocs']");
+                if (!ReferenceEquals(modalBodyTechDocs, null))
                 {
-                    var manuFacturerLinks = manLinksNode.InnerHtml;
+                    if (modalBodyTechDocs.Count == 2)
+                    {
+                        
+
+                        List<String> TechDocs = new List<string>();
+                        var hrefs = modalBodyTechDocs[0].Descendants("a");
+                        foreach (var href in hrefs)
+                        {
+                            String docUrl = href.Attributes["href"].Value;
+                            try
+                            {
+                                if (docUrl.StartsWith("/"))
+                                    docUrl = "http://www.seclock.com/" + docUrl;
+
+                                String DocFolder = Settings.GetValue("DocFolder");
+                                if (!Directory.Exists(DocFolder))
+                                    Directory.CreateDirectory(DocFolder);
+
+                                String FileName = String.Format("{0}_{1}_{2}",Settings.GetValue("SecLockImagePrefix"), p.Code, docUrl.Substring(docUrl.LastIndexOf("/") + 1));
+                                String FilePath = String.Format("{0}\\{1}", DocFolder, FileName);
+
+                                if (File.Exists (FilePath))
+                                    File.Delete(FilePath);
+
+                                browser.DownloadFile(docUrl, FilePath);
+                                TechDocs.Add(FileName);
+                            }
+                            catch (Exception ex)
+                            {
+                                Utility.ErrorLog(ex, null);
+                                if (Settings.GetValue("MailErrors") == true)
+                                    Utility.ApplicationLog(String.Format("{0}", ex.Message), Constants.EmailErrorFile);
+                            }
+                            finally{
+                                p.TechDoc = String.Join(";", TechDocs);
+                            }
+
+                            
+                        }
+                    }
                 }
+                #endregion
+
+                //var manLinksNode =modalBody.SelectNodes("//ul[@class='techdocs']").FirstOrDefault();
+                //if (!ReferenceEquals(manLinksNode, null))
+                //{
+                //    var manuFacturerLinks = manLinksNode.InnerHtml;
+                //}
             }
             return p;
         }
@@ -796,6 +846,8 @@ namespace WebSpider.Core
             ft.SLD_IMG2 = product.ImageUrl2;
             ft.SLD_VENDOR = product.ManufacturerName;
             ft.SLD_INV = product.Stock;
+            ft.SLD_DESC = product.Description;
+            ft.SLD_TECHDOC = product.TechDoc;
             ft.SLD_LastUpdate = DateTime.Now.ToString(Settings.GetValue("DateFormat"));
 
             new FinalTableManager(ConnStr).SaveProduct(ft);

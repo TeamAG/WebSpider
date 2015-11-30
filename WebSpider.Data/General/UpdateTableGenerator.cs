@@ -44,6 +44,8 @@ namespace WebSpider.Data.General
                     + "SLD_IMG2 TEXT(255), "
                     + "SLD_VENDOR TEXT(255), "
                     + "SLD_INV TEXT(255), "
+                    + "SLD_DESC MEMO, "
+                    + "SLD_TECHDOC MEMO, "
                     + "SLD_LastUpdate TEXT(255)) ";
                 oDm = new OleDbDataManager(this.ConnectionString, Query, true);
                 oDm.RunActionQuery();

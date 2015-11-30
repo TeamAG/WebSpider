@@ -123,7 +123,7 @@
   <ConfigurationSetting>
     <Name>ScheduleDay</Name>
     <Type>System.String</Type>
-    <Value>System.Windows.Forms.ListBox+SelectedObjectCollection</Value>
+    <Value />
   </ConfigurationSetting>
   <ConfigurationSetting>
     <Name>ScheduleTime</Name>
@@ -158,12 +158,12 @@
   <ConfigurationSetting>
     <Name>WebSpiderDB</Name>
     <Type>System.String</Type>
-    <Value>E:\GitHub\TeamAG\WebSpider\WebSpider2\bin\Debug\App_Code\WebSpiderDB.accdb</Value>
+    <Value>E:\GitHub\WebSpider\WebSpider2\bin\Debug\App_Code\WebSpiderDB.accdb</Value>
   </ConfigurationSetting>
   <ConfigurationSetting>
     <Name>FinalTable</Name>
     <Type>System.String</Type>
-    <Value>E:\GitHub\TeamAG\WebSpider\WebSpider2\bin\Debug\App_Code\Update_Spider.accdb</Value>
+    <Value>E:\GitHub\WebSpider\WebSpider2\bin\Debug\App_Code\Update_Spider.accdb</Value>
   </ConfigurationSetting>
   <ConfigurationSetting>
     <Name>PingRate</Name>
@@ -204,5 +204,10 @@
     <Name>SecLockImagePrefix</Name>
     <Type>System.String</Type>
     <Value>S</Value>
+  </ConfigurationSetting>
+  <ConfigurationSetting>
+    <Name>DocFolder</Name>
+    <Type>System.String</Type>
+    <Value>D:\Users\Anirban\Desktop\WebSpiderDocs</Value>
   </ConfigurationSetting>
 </WebSpiderSettings>

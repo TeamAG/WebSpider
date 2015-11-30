@@ -55,29 +55,32 @@ namespace WebSpider.SecLock.Data.External
         }
         #endregion
 
-        #region [ Insert ]
+        #region [ Update ]
         private int Update(FinalTable finalTable)
         {
             String Query = "UPDATE [Final_Table] SET [SLD_SOURCE_ID] = '" + finalTable.SLD_SOURCE_ID
                 + "', [SLD_COST] = "+ finalTable.SLD_COST 
-                +", [SLD_IMG1] = '"+ finalTable.SLD_IMG1 
-                +"', [SLD_IMG2] = '"+finalTable.SLD_IMG2
-                +"', [SLD_VENDOR] = '"+finalTable.SLD_VENDOR
-                +"', [SLD_INV] = '"+finalTable.SLD_INV
-                +"', [SLD_LastUpdate] = '"+ finalTable.SLD_LastUpdate +"'"
-                + "' WHERE [SLD_PART] = '" + finalTable.SLD_PART + "'";
+                + ", [SLD_IMG1] = '"+ finalTable.SLD_IMG1 
+                + "', [SLD_IMG2] = '"+finalTable.SLD_IMG2
+                + "', [SLD_VENDOR] = '"+finalTable.SLD_VENDOR
+                + "', [SLD_INV] = '"+finalTable.SLD_INV
+                + "', [SLD_DESC] = '" + finalTable.SLD_DESC
+                + "', [SLD_TECHDOC] = '" + finalTable.SLD_TECHDOC
+                + "', [SLD_LastUpdate] = '"+ finalTable.SLD_LastUpdate
+                + "' WHERE [SLD_PART] = '" + finalTable.SLD_PART 
+                + "'";
             OleDbDataManager oDm = new OleDbDataManager(this.ConnectionString, Query, true);
             return oDm.RunActionQuery();
         }
         #endregion
 
-        #region [ Update ]
+        #region [ Insert ]
         private int Insert(FinalTable finalTable)
         {
-            String Query = "INSERT INTO [Final_Table] ([SLD_SOURCE_ID], [SLD_COST], [SLD_PART], [SLD_IMG1], [SLD_IMG2], [SLD_VENDOR], [SLD_INV], [SLD_LastUpdate])" 
+            String Query = "INSERT INTO [Final_Table] ([SLD_SOURCE_ID], [SLD_COST], [SLD_PART], [SLD_IMG1], [SLD_IMG2], [SLD_VENDOR], [SLD_INV], [SLD_DESC], [SLD_TECHDOC], [SLD_LastUpdate])" 
                 + "VALUES ('"+ finalTable.SLD_SOURCE_ID +"',"+ finalTable.SLD_COST +" , '"+finalTable.SLD_PART+"', '"
                 +finalTable.SLD_IMG1+"', '"+finalTable.SLD_IMG2+"', '"+finalTable.SLD_VENDOR+"', '"
-                +finalTable.SLD_INV+"', '"+finalTable.SLD_LastUpdate+"')";
+                + finalTable.SLD_INV + "', '" + finalTable.SLD_DESC + "', '" + finalTable.SLD_TECHDOC + "', '" + finalTable.SLD_LastUpdate + "')";
             OleDbDataManager oDm = new OleDbDataManager(this.ConnectionString, Query, true);
             return oDm.RunActionQuery();
         }

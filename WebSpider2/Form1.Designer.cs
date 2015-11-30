@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "-1",
             "Current Task",
             "Current Running Task not scheduled",
@@ -229,6 +229,9 @@
             this.label34 = new System.Windows.Forms.Label();
             this.btnNewSchedule = new System.Windows.Forms.Button();
             this.btnDeleteSchedule = new System.Windows.Forms.Button();
+            this.btnDocFolderBrowse = new System.Windows.Forms.Button();
+            this.label44 = new System.Windows.Forms.Label();
+            this.txtDocFolder = new System.Windows.Forms.TextBox();
             this.tabAdiGlobal.SuspendLayout();
             this.tabPageAdiCategory.SuspendLayout();
             this.tabPageAdiBrand.SuspendLayout();
@@ -983,7 +986,7 @@
             // 
             this.btnCleanDb.BackColor = System.Drawing.Color.Red;
             this.btnCleanDb.ForeColor = System.Drawing.Color.Black;
-            this.btnCleanDb.Location = new System.Drawing.Point(489, 235);
+            this.btnCleanDb.Location = new System.Drawing.Point(489, 240);
             this.btnCleanDb.Name = "btnCleanDb";
             this.btnCleanDb.Size = new System.Drawing.Size(413, 23);
             this.btnCleanDb.TabIndex = 27;
@@ -993,6 +996,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.btnDocFolderBrowse);
+            this.groupBox2.Controls.Add(this.label44);
+            this.groupBox2.Controls.Add(this.txtDocFolder);
             this.groupBox2.Controls.Add(this.btnUpdateImageBrowse);
             this.groupBox2.Controls.Add(this.label32);
             this.groupBox2.Controls.Add(this.btnCrawlImageBrowse);
@@ -1001,10 +1007,10 @@
             this.groupBox2.Controls.Add(this.txtUpdateImageFolder);
             this.groupBox2.Location = new System.Drawing.Point(489, 126);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(413, 78);
+            this.groupBox2.Size = new System.Drawing.Size(413, 103);
             this.groupBox2.TabIndex = 26;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Image Folders";
+            this.groupBox2.Text = "Download Folders";
             // 
             // btnUpdateImageBrowse
             // 
@@ -2108,9 +2114,9 @@
             this.listViewScheduleTasks.FullRowSelect = true;
             this.listViewScheduleTasks.GridLines = true;
             this.listViewScheduleTasks.HideSelection = false;
-            listViewItem1.Tag = "";
+            listViewItem3.Tag = "";
             this.listViewScheduleTasks.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1});
+            listViewItem3});
             this.listViewScheduleTasks.Location = new System.Drawing.Point(0, 445);
             this.listViewScheduleTasks.MultiSelect = false;
             this.listViewScheduleTasks.Name = "listViewScheduleTasks";
@@ -2194,6 +2200,32 @@
             this.btnDeleteSchedule.Text = "Delete";
             this.btnDeleteSchedule.UseVisualStyleBackColor = true;
             this.btnDeleteSchedule.Click += new System.EventHandler(this.btnDeleteSchedule_Click);
+            // 
+            // btnDocFolderBrowse
+            // 
+            this.btnDocFolderBrowse.Location = new System.Drawing.Point(329, 70);
+            this.btnDocFolderBrowse.Name = "btnDocFolderBrowse";
+            this.btnDocFolderBrowse.Size = new System.Drawing.Size(75, 23);
+            this.btnDocFolderBrowse.TabIndex = 31;
+            this.btnDocFolderBrowse.Text = "Browse";
+            this.btnDocFolderBrowse.UseVisualStyleBackColor = true;
+            this.btnDocFolderBrowse.Click += new System.EventHandler(this.btnDocFolderBrowse_Click);
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(20, 75);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(93, 13);
+            this.label44.TabIndex = 30;
+            this.label44.Text = "Documents Folder";
+            // 
+            // txtDocFolder
+            // 
+            this.txtDocFolder.Location = new System.Drawing.Point(117, 72);
+            this.txtDocFolder.Name = "txtDocFolder";
+            this.txtDocFolder.Size = new System.Drawing.Size(202, 20);
+            this.txtDocFolder.TabIndex = 29;
             // 
             // Form1
             // 
@@ -2456,6 +2488,9 @@
         private System.Windows.Forms.CheckBox chkSecLockManufanufacturersSelectAll;
         private System.Windows.Forms.CheckBox chkSecLockCategoriessSelectAll;
         private System.Windows.Forms.CheckBox chkSecLockProductsSelectAll;
+        private System.Windows.Forms.Button btnDocFolderBrowse;
+        private System.Windows.Forms.Label label44;
+        private System.Windows.Forms.TextBox txtDocFolder;
     }
 }
 
